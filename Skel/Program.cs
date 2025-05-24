@@ -12,9 +12,100 @@ using System.Security.Cryptography.X509Certificates;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 using System.Threading;
+using System.Text.RegularExpressions;
 
 namespace netUtils
 {
+    public class misc
+    {
+        public static void printPayload(List<byte> input)
+        {
+            string output = "";
+
+            if (input.Count == 0)
+            {
+                return;
+            }
+
+            for (int n = 0; n < input.Count; n++)
+            {
+                if (n % 1 == 0)
+                {
+                    output += "    ";
+                }
+
+                output += input[n].ToString("X2");
+
+                if ((n+1) % 4 == 0)
+                {
+                    output += "\r\n";
+                }
+            }
+            verbose.write($"PAYLOAD:\r\n{output}");
+            return;
+        }
+
+        public static List<byte> icmpPacket = new List<byte>();
+        public static bool validateIP(string input)
+        {
+            string pattern = @"(\d{0,3})\.(\d{0,3})\.(\d{0,3})\.(\d{0,3})";
+
+            if (Regex.IsMatch(input, pattern))
+            {
+                Match match = Regex.Match(input, pattern);
+                if (match.Groups.Count == 5)
+                {
+                    for (int i = 1; i < 5; i++)
+                    {
+                        if (int.Parse(match.Groups[i].Value) < 0 || int.Parse(match.Groups[i].Value) > 255)
+                        {
+                            MessageBox.Show($"Octet {i} [{int.Parse(match.Groups[i].Value)}] out of range. [0-255]", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return false;
+                        }
+                    }
+                    return true;
+                } else
+                {
+                    MessageBox.Show("IP address format incorrect.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+            } else
+            {
+                MessageBox.Show("Invalid IP address.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
+        public static UInt16 calcCksum(List<byte> data)
+        {
+            UInt32 output = 0;
+
+            // pad message to an even number of bytes
+            if (data.Count % 2 != 0)
+            {
+                data.Add(0);
+            }
+
+            for (int i = 0; i < data.Count; i++)
+            {
+                if (i % 2 != 0)
+                {
+                    output += ((UInt32)(data[i - 1]) << 8) + (UInt32)data[i];
+                    output = (output & 0xFFFF) + (output >> 16);
+                }
+            }
+
+            byte[] cksum = { 0, 0 };
+            cksum[0] = (byte)(output >> 8);
+            cksum[1] = (byte)(output << 8 >> 8);
+            verbose.write($"XOR: 0x{cksum[0].ToString("X2")}{cksum[1].ToString("X2")} ^ 0xFFFF");
+            cksum[0] = (byte)(cksum[0] ^ 0xFF);
+            cksum[1] = (byte)(cksum[1] ^ 0xFF);
+
+            verbose.write($"Checksum: 0x{cksum[0].ToString("X2")}{cksum[1].ToString("X2")}");
+            return (UInt16)(((UInt16)cksum[0] << 8) + (UInt16)cksum[1]);
+        }
+    }
     public class verbose
     {
         public static System.Threading.Thread thread;
