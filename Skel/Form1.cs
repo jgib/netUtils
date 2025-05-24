@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -1307,7 +1309,19 @@ namespace netUtils
         {
             if (misc.validateIP(ICMPipAddressTextBox.Text))
             {
-                // send packet
+                verbose.write("Creating socket");
+                Socket icmpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Raw, ProtocolType.Icmp);
+                icmpSocket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.HeaderIncluded, true);
+                //icmpSocket.Bind(new IPEndPoint(IPAddress.Parse(ICMPipAddressTextBox.Text), 0));
+
+                verbose.write("Converting payload");
+                var payload = new byte[misc.icmpPacket.Count];
+                for (int i = 0; i < misc.icmpPacket.Count; i++)
+                {
+                    payload[i] = misc.icmpPacket[i];
+                }
+                verbose.write("Sending packet");
+                icmpSocket.SendTo(payload, new IPEndPoint(IPAddress.Parse(ICMPipAddressTextBox.Text), 0));
             }
         }
 
