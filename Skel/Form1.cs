@@ -1608,8 +1608,19 @@ namespace netUtils
                                 }
                             }
                             verbose.write($"QNAME: {dnsQNAME}");
-                            verbose.write($"POS: {pos}");
-                            verbose.write($"LEN: {len}");
+
+                            if (dnsData.Length > (pos + 3))
+                            {
+                                dnsQTYPE = (UInt16)dnsData[pos];
+                                dnsQTYPE <<= 8;
+                                dnsQTYPE += (UInt16)dnsData[pos + 1];
+                                verbose.write($"QTYPE: {dnsQTYPE}");
+
+                                dnsQCLASS = (UInt16)dnsData[pos + 2];
+                                dnsQCLASS <<= 8;
+                                dnsQCLASS += (UInt16)dnsData[pos + 3];
+                                verbose.write($"QCLASS: {dnsQCLASS}");
+                            }
                         }
                     }
                 } catch (SocketException ex)
@@ -1619,6 +1630,7 @@ namespace netUtils
                     return;
                 } finally
                 {
+                    verbose.write($"Closing DNS socket");
                     dnsListener.Close();
                 }
             }
