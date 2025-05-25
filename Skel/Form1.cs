@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace netUtils
 {
     public partial class Form1 : Form
@@ -1456,6 +1457,36 @@ namespace netUtils
             {
                 verbose.write($"Removing from list [{lvi.Text}]");
                 dnsConfigListView.Items.Remove(lvi);
+            }
+        }
+
+        private void dnsStartServerButton_Click(object sender, EventArgs e)
+        {
+            if (dnsUdpRadio.Checked)
+            {
+                int dnsPort = int.Parse(dnsPortNumericUpDown.Value.ToString());
+                verbose.write($"Starting DNS server UDP:{dnsPort}");
+                UdpClient dnsListener = new UdpClient(dnsPort);
+                verbose.write($"Started listen socket");
+                IPEndPoint groupEP = new IPEndPoint(IPAddress.Any, dnsPort);
+                verbose.write($"Created endpoint group");
+                try
+                {
+                    while (true)
+                    {
+                        byte[] dnsData = dnsListener.Receive(ref groupEP);
+                        verbose.write($"Received DNS data:");
+                        misc.printPayload(dnsData.ToList<byte>());
+                    }
+                } catch (SocketException ex)
+                {
+                    verbose.write($"EXCEPTION: {ex.ToString()}");
+                    MessageBox.Show(ex.ToString(), "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                } finally
+                {
+                    dnsListener.Close();
+                }
             }
         }
     }

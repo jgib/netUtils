@@ -77,10 +77,17 @@
             this.dnsAddButton = new System.Windows.Forms.Button();
             this.dnsRemoveButton = new System.Windows.Forms.Button();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.dnsStartServerButton = new System.Windows.Forms.Button();
+            this.dnsStopServerButton = new System.Windows.Forms.Button();
+            this.label19 = new System.Windows.Forms.Label();
+            this.dnsPortNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.dnsUdpRadio = new System.Windows.Forms.RadioButton();
+            this.dnsTcpRadio = new System.Windows.Forms.RadioButton();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dnsPreferenceNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dnsPortNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -439,6 +446,12 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage2.Controls.Add(this.dnsTcpRadio);
+            this.tabPage2.Controls.Add(this.dnsUdpRadio);
+            this.tabPage2.Controls.Add(this.dnsPortNumericUpDown);
+            this.tabPage2.Controls.Add(this.label19);
+            this.tabPage2.Controls.Add(this.dnsStopServerButton);
+            this.tabPage2.Controls.Add(this.dnsStartServerButton);
             this.tabPage2.Controls.Add(this.dnsRemoveButton);
             this.tabPage2.Controls.Add(this.dnsAddButton);
             this.tabPage2.Controls.Add(this.dnsConfigListView);
@@ -612,6 +625,74 @@
             this.columnHeader1.Text = "DNS Record";
             this.columnHeader1.Width = 748;
             // 
+            // dnsStartServerButton
+            // 
+            this.dnsStartServerButton.Location = new System.Drawing.Point(739, 43);
+            this.dnsStartServerButton.Name = "dnsStartServerButton";
+            this.dnsStartServerButton.Size = new System.Drawing.Size(72, 23);
+            this.dnsStartServerButton.TabIndex = 11;
+            this.dnsStartServerButton.Text = "Start Server";
+            this.dnsStartServerButton.UseVisualStyleBackColor = true;
+            this.dnsStartServerButton.Click += new System.EventHandler(this.dnsStartServerButton_Click);
+            // 
+            // dnsStopServerButton
+            // 
+            this.dnsStopServerButton.Location = new System.Drawing.Point(817, 43);
+            this.dnsStopServerButton.Name = "dnsStopServerButton";
+            this.dnsStopServerButton.Size = new System.Drawing.Size(72, 23);
+            this.dnsStopServerButton.TabIndex = 12;
+            this.dnsStopServerButton.Text = "Stop Server";
+            this.dnsStopServerButton.UseVisualStyleBackColor = true;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(645, 48);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(26, 13);
+            this.label19.TabIndex = 13;
+            this.label19.Text = "Port";
+            // 
+            // dnsPortNumericUpDown
+            // 
+            this.dnsPortNumericUpDown.Location = new System.Drawing.Point(677, 46);
+            this.dnsPortNumericUpDown.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.dnsPortNumericUpDown.Name = "dnsPortNumericUpDown";
+            this.dnsPortNumericUpDown.Size = new System.Drawing.Size(56, 20);
+            this.dnsPortNumericUpDown.TabIndex = 14;
+            this.dnsPortNumericUpDown.Value = new decimal(new int[] {
+            53,
+            0,
+            0,
+            0});
+            // 
+            // dnsUdpRadio
+            // 
+            this.dnsUdpRadio.AutoSize = true;
+            this.dnsUdpRadio.Checked = true;
+            this.dnsUdpRadio.Location = new System.Drawing.Point(539, 46);
+            this.dnsUdpRadio.Name = "dnsUdpRadio";
+            this.dnsUdpRadio.Size = new System.Drawing.Size(48, 17);
+            this.dnsUdpRadio.TabIndex = 15;
+            this.dnsUdpRadio.TabStop = true;
+            this.dnsUdpRadio.Text = "UDP";
+            this.dnsUdpRadio.UseVisualStyleBackColor = true;
+            // 
+            // dnsTcpRadio
+            // 
+            this.dnsTcpRadio.AutoSize = true;
+            this.dnsTcpRadio.Location = new System.Drawing.Point(593, 46);
+            this.dnsTcpRadio.Name = "dnsTcpRadio";
+            this.dnsTcpRadio.Size = new System.Drawing.Size(46, 17);
+            this.dnsTcpRadio.TabIndex = 16;
+            this.dnsTcpRadio.TabStop = true;
+            this.dnsTcpRadio.Text = "TCP";
+            this.dnsTcpRadio.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -629,6 +710,7 @@
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dnsPreferenceNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dnsPortNumericUpDown)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -683,6 +765,12 @@
         private System.Windows.Forms.Button dnsRemoveButton;
         private System.Windows.Forms.Button dnsAddButton;
         private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Button dnsStopServerButton;
+        private System.Windows.Forms.Button dnsStartServerButton;
+        private System.Windows.Forms.RadioButton dnsTcpRadio;
+        private System.Windows.Forms.RadioButton dnsUdpRadio;
+        private System.Windows.Forms.NumericUpDown dnsPortNumericUpDown;
     }
 }
 
