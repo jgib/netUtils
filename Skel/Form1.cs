@@ -1429,10 +1429,7 @@ namespace netUtils
             switch (rrComboBox.SelectedItem)
             {
                 case "A":
-                    ListViewItem lvi = new ListViewItem();
-                    lvi.SubItems.Add($"{domainTextBox.Text} IN A {dnsValueTextBox.Text}");
-                    verbose.write($"Adding [{lvi.SubItems[0].Text}] to list");
-                    dnsConfigListView.Items.Add(lvi);
+                    dnsConfigListView.Items.Add(new ListViewItem($"{domainTextBox.Text} IN A {dnsValueTextBox.Text}"));
                     break;
                 case "CNAME":
                     dnsConfigListView.Items.Add(new ListViewItem($"{domainTextBox.Text} IN CNAME {dnsValueTextBox.Text}"));
@@ -1449,6 +1446,16 @@ namespace netUtils
                 case "TXT":
                     dnsConfigListView.Items.Add(new ListViewItem($"{domainTextBox.Text} TXT {dnsValueTextBox.Text}"));
                     break;
+            }
+            verbose.write($"Added [{dnsConfigListView.Items[dnsConfigListView.Items.Count - 1].Text}] to list");
+        }
+
+        private void dnsRemoveButton_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem lvi in dnsConfigListView.SelectedItems)
+            {
+                verbose.write($"Removing from list [{lvi.Text}]");
+                dnsConfigListView.Items.Remove(lvi);
             }
         }
     }

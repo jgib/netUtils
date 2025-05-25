@@ -76,6 +76,7 @@
             this.dnsConfigListView = new System.Windows.Forms.ListView();
             this.dnsAddButton = new System.Windows.Forms.Button();
             this.dnsRemoveButton = new System.Windows.Forms.Button();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -561,6 +562,11 @@
             // dnsPreferenceNumericUpDown
             // 
             this.dnsPreferenceNumericUpDown.Location = new System.Drawing.Point(677, 19);
+            this.dnsPreferenceNumericUpDown.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
             this.dnsPreferenceNumericUpDown.Name = "dnsPreferenceNumericUpDown";
             this.dnsPreferenceNumericUpDown.ReadOnly = true;
             this.dnsPreferenceNumericUpDown.Size = new System.Drawing.Size(56, 20);
@@ -569,6 +575,10 @@
             // dnsConfigListView
             // 
             this.dnsConfigListView.BackColor = System.Drawing.SystemColors.Control;
+            this.dnsConfigListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1});
+            this.dnsConfigListView.Font = new System.Drawing.Font("Cascadia Mono", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dnsConfigListView.FullRowSelect = true;
             this.dnsConfigListView.HideSelection = false;
             this.dnsConfigListView.Location = new System.Drawing.Point(6, 77);
             this.dnsConfigListView.Name = "dnsConfigListView";
@@ -589,12 +599,18 @@
             // 
             // dnsRemoveButton
             // 
-            this.dnsRemoveButton.Location = new System.Drawing.Point(282, 48);
+            this.dnsRemoveButton.Location = new System.Drawing.Point(187, 48);
             this.dnsRemoveButton.Name = "dnsRemoveButton";
             this.dnsRemoveButton.Size = new System.Drawing.Size(59, 23);
             this.dnsRemoveButton.TabIndex = 10;
             this.dnsRemoveButton.Text = "Remove";
             this.dnsRemoveButton.UseVisualStyleBackColor = true;
+            this.dnsRemoveButton.Click += new System.EventHandler(this.dnsRemoveButton_Click);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "DNS Record";
+            this.columnHeader1.Width = 748;
             // 
             // Form1
             // 
@@ -666,6 +682,7 @@
         private System.Windows.Forms.ListView dnsConfigListView;
         private System.Windows.Forms.Button dnsRemoveButton;
         private System.Windows.Forms.Button dnsAddButton;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
     }
 }
 
