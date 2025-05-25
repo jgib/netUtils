@@ -1492,6 +1492,9 @@ namespace netUtils
                         UInt16 dnsANCOUNT = 0;
                         UInt16 dnsNSCOUNT = 0;
                         UInt16 dnsARCOUNT = 0;
+                        string dnsQNAME = "";
+                        UInt16 dnsQTYPE = 0;
+                        UInt16 dnsQCLASS = 0;
 
                         for (int i = 0; i < dnsData.Length; i++)
                         {
@@ -1589,6 +1592,24 @@ namespace netUtils
                                     
                                     break;
                             }
+                        }
+                        if (dnsData.Length > 13)
+                        {
+                            int pos = 13;
+                            int len = (int)dnsData[pos - 1];
+                            while (len != 0)
+                            {
+                                if (dnsData.Length > (pos + len))
+                                {
+                                    dnsQNAME += Encoding.ASCII.GetString(dnsData, pos, len);
+                                    dnsQNAME += ".";
+                                    pos += len + 1;
+                                    len = (int)dnsData[pos - 1];
+                                }
+                            }
+                            verbose.write($"QNAME: {dnsQNAME}");
+                            verbose.write($"POS: {pos}");
+                            verbose.write($"LEN: {len}");
                         }
                     }
                 } catch (SocketException ex)
