@@ -643,6 +643,7 @@
             this.dnsStopServerButton.TabIndex = 12;
             this.dnsStopServerButton.Text = "Stop Server";
             this.dnsStopServerButton.UseVisualStyleBackColor = true;
+            this.dnsStopServerButton.Click += new System.EventHandler(this.dnsStopServerButton_Click);
             // 
             // label19
             // 

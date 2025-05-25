@@ -1464,6 +1464,7 @@ namespace netUtils
         {
             if (dnsUdpRadio.Checked)
             {
+                misc.dnsServerRunning = true;
                 int dnsPort = int.Parse(dnsPortNumericUpDown.Value.ToString());
                 verbose.write($"Starting DNS server UDP:{dnsPort}");
                 UdpClient dnsListener = new UdpClient(dnsPort);
@@ -1472,11 +1473,123 @@ namespace netUtils
                 verbose.write($"Created endpoint group");
                 try
                 {
-                    while (true)
+                    while (misc.dnsServerRunning)
                     {
                         byte[] dnsData = dnsListener.Receive(ref groupEP);
                         verbose.write($"Received DNS data:");
                         misc.printPayload(dnsData.ToList<byte>());
+
+                        UInt16 dnsID = 0;
+                        bool dnsQR = false;
+                        byte dnsOPCODE = 0;
+                        bool dnsAA = false;
+                        bool dnsTC = false;
+                        bool dnsRD = false;
+                        bool dnsRA = false;
+                        byte dnsZ = 0; //future use, must be zero
+                        byte dnsRCODE = 0;
+                        UInt16 dnsQDCOUNT = 0;
+                        UInt16 dnsANCOUNT = 0;
+                        UInt16 dnsNSCOUNT = 0;
+                        UInt16 dnsARCOUNT = 0;
+
+                        for (int i = 0; i < dnsData.Length; i++)
+                        {
+                            switch(i)
+                            {
+                                case 1:
+                                    dnsID = (UInt16)dnsData[i - 1];
+                                    dnsID <<= 8;
+                                    dnsID += (UInt16)dnsData[i];
+                                    verbose.write($"ID: {dnsID}");
+                                    break;
+                                case 2:
+                                    if ((dnsData[i] & 0b10000000) == 1)
+                                    {
+                                        dnsQR = true;
+                                    } else
+                                    {
+                                        dnsQR = false;
+                                    }
+                                    verbose.write($"QR: {dnsQR}");
+
+                                    dnsOPCODE = (byte)(dnsData[i] & 0b01111000);
+                                    verbose.write($"OPCODE: {dnsOPCODE}");
+
+                                    if ((dnsData[i] & 0b00000100) == 1)
+                                    {
+                                        dnsAA = true;
+                                    } else
+                                    {
+                                        dnsAA = false;
+                                    }
+                                    verbose.write($"AA: {dnsAA}");
+
+                                    if ((dnsData[i] & 0b00000010) == 1)
+                                    {
+                                        dnsTC = true;
+                                    } else
+                                    {
+                                        dnsTC = false;
+                                    }
+                                    verbose.write($"TC: {dnsTC}");
+
+                                    if ((dnsData[i] & 0b00000001) == 1)
+                                    {
+                                        dnsRD = true;
+                                    } else {
+                                        dnsRD = false;
+                                    }
+                                    verbose.write($"RD: {dnsRD}");
+
+                                    break;
+                                case 3:
+                                    if ((dnsData[i] & 0b10000000) == 1)
+                                    {
+                                        dnsRA = true;
+                                    } else
+                                    {
+                                        dnsRA = false;
+                                    }
+                                    verbose.write($"RA: {dnsRA}");
+
+                                    dnsZ = (byte)(dnsData[i] & 0b01110000);
+                                    verbose.write($"Z: {dnsZ}");
+
+                                    dnsRCODE = (byte)(dnsData[i] & 0b00001111);
+                                    verbose.write($"RCODE: {dnsRCODE}");
+
+                                    break;
+                                case 5:
+                                    dnsQDCOUNT = (UInt16)dnsData[i - 1];
+                                    dnsQDCOUNT <<= 8;
+                                    dnsQDCOUNT += (UInt16)dnsData[i];
+                                    verbose.write($"QDCOUNT: {dnsQDCOUNT}");
+
+                                    break;
+                                case 7:
+                                    dnsANCOUNT = (UInt16)dnsData[i - 1];
+                                    dnsANCOUNT <<= 8;
+                                    dnsANCOUNT += (UInt16)dnsData[i];
+                                    verbose.write($"ANCOUNT: {dnsANCOUNT}");
+
+                                    break;
+                                case 9:
+                                    dnsNSCOUNT = (UInt16)dnsData[i - 1];
+                                    dnsNSCOUNT <<= 8;
+                                    dnsNSCOUNT += (UInt16)dnsData[i];
+                                    verbose.write($"NSCOUNT: {dnsNSCOUNT}");
+
+                                    break;
+                                case 11:
+                                    dnsARCOUNT = (UInt16)dnsData[i - 1];
+                                    dnsARCOUNT <<= 8;
+                                    dnsARCOUNT += (UInt16)dnsData[i];
+                                    verbose.write($"ARCOUNT: {dnsARCOUNT}");
+                                    
+                                    break;
+                            }
+                        }
                     }
                 } catch (SocketException ex)
                 {
@@ -1488,6 +1601,11 @@ namespace netUtils
                     dnsListener.Close();
                 }
             }
+        }
+
+        private void dnsStopServerButton_Click(object sender, EventArgs e)
+        {
+            misc.dnsServerRunning = false;
         }
     }
 }

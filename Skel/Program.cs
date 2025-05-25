@@ -45,7 +45,9 @@ namespace netUtils
             return;
         }
 
+        public static bool dnsServerRunning = false;
         public static List<byte> icmpPacket = new List<byte>();
+        
         public static bool validateIP(string input)
         {
             string pattern = @"(\d{0,3})\.(\d{0,3})\.(\d{0,3})\.(\d{0,3})";
