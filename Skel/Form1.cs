@@ -1311,7 +1311,7 @@ namespace netUtils
             {
                 verbose.write("Creating socket");
                 Socket icmpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Raw, ProtocolType.Icmp);
-                icmpSocket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.HeaderIncluded, true);
+                //icmpSocket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.HeaderIncluded, true);
                 //icmpSocket.Bind(new IPEndPoint(IPAddress.Parse(ICMPipAddressTextBox.Text), 0));
 
                 verbose.write("Converting payload");
@@ -1320,8 +1320,10 @@ namespace netUtils
                 {
                     payload[i] = misc.icmpPacket[i];
                 }
-                verbose.write("Sending packet");
-                icmpSocket.SendTo(payload, new IPEndPoint(IPAddress.Parse(ICMPipAddressTextBox.Text), 0));
+                verbose.write($"Sending packet to {ICMPipAddressTextBox.Text}");
+                misc.printPayload(misc.icmpPacket);
+                int nBytes = icmpSocket.SendTo(payload, new IPEndPoint(IPAddress.Parse(ICMPipAddressTextBox.Text), 0));
+                verbose.write($"Sent {nBytes} bytes");
             }
         }
 
