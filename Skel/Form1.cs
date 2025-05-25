@@ -1386,5 +1386,70 @@ namespace netUtils
         {
             calcICMPpacket();
         }
+
+        private void rrComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (rrComboBox.SelectedItem)
+            {
+                case "A":
+                    domainTextBox.ReadOnly = false;
+                    dnsValueTextBox.ReadOnly = false;
+                    dnsPreferenceNumericUpDown.ReadOnly = true;
+                    break;
+                case "CNAME":
+                    domainTextBox.ReadOnly = false;
+                    dnsValueTextBox.ReadOnly = false;
+                    dnsPreferenceNumericUpDown.ReadOnly = true;
+                    break;
+                case "MX":
+                    domainTextBox.ReadOnly = false;
+                    dnsValueTextBox.ReadOnly = false;
+                    dnsPreferenceNumericUpDown.ReadOnly = false;
+                    break;
+                case "NS":
+                    domainTextBox.ReadOnly = false;
+                    dnsValueTextBox.ReadOnly = false;
+                    dnsPreferenceNumericUpDown.ReadOnly = true;
+                    break;
+                case "PTR":
+                    domainTextBox.ReadOnly = false;
+                    dnsValueTextBox.ReadOnly = false;
+                    dnsPreferenceNumericUpDown.ReadOnly = true;
+                    break;
+                case "TXT":
+                    domainTextBox.ReadOnly = false;
+                    dnsValueTextBox.ReadOnly = false;
+                    dnsPreferenceNumericUpDown.ReadOnly = true;
+                    break;
+            }
+        }
+
+        private void dnsAddButton_Click(object sender, EventArgs e)
+        {
+            switch (rrComboBox.SelectedItem)
+            {
+                case "A":
+                    ListViewItem lvi = new ListViewItem();
+                    lvi.SubItems.Add($"{domainTextBox.Text} IN A {dnsValueTextBox.Text}");
+                    verbose.write($"Adding [{lvi.SubItems[0].Text}] to list");
+                    dnsConfigListView.Items.Add(lvi);
+                    break;
+                case "CNAME":
+                    dnsConfigListView.Items.Add(new ListViewItem($"{domainTextBox.Text} IN CNAME {dnsValueTextBox.Text}"));
+                    break;
+                case "MX":
+                    dnsConfigListView.Items.Add(new ListViewItem($"{domainTextBox.Text} IN MX {dnsPreferenceNumericUpDown.Value} {dnsValueTextBox.Text}"));
+                    break;
+                case "NS":
+                    dnsConfigListView.Items.Add(new ListViewItem($"{domainTextBox.Text} IN NS {dnsValueTextBox.Text}"));
+                    break;
+                case "PTR":
+                    dnsConfigListView.Items.Add(new ListViewItem($"{domainTextBox.Text} IN PTR {dnsValueTextBox.Text}"));
+                    break;
+                case "TXT":
+                    dnsConfigListView.Items.Add(new ListViewItem($"{domainTextBox.Text} TXT {dnsValueTextBox.Text}"));
+                    break;
+            }
+        }
     }
 }

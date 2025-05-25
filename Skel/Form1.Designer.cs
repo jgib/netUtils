@@ -31,6 +31,31 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.icmpButton = new System.Windows.Forms.Button();
+            this.pointerTextBox = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.dataTextBox = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.tranTimestampTextBox = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.recvTimestampTextBox = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.origTimestampTextBox = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.gwInetAddrTextBox = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.origDatagramTextBox = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.inetHeaderTextBox = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.sequenceTextBox = new System.Windows.Forms.TextBox();
+            this.identifierTextBox = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.checksumTextBox = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.codeTextBox = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.RFCtext = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.TypeList = new System.Windows.Forms.ComboBox();
@@ -40,33 +65,21 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.label3 = new System.Windows.Forms.Label();
-            this.codeTextBox = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.checksumTextBox = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.identifierTextBox = new System.Windows.Forms.TextBox();
-            this.sequenceTextBox = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.inetHeaderTextBox = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.origDatagramTextBox = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.gwInetAddrTextBox = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.origTimestampTextBox = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.recvTimestampTextBox = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.tranTimestampTextBox = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.dataTextBox = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.pointerTextBox = new System.Windows.Forms.TextBox();
-            this.icmpButton = new System.Windows.Forms.Button();
+            this.label15 = new System.Windows.Forms.Label();
+            this.rrComboBox = new System.Windows.Forms.ComboBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.domainTextBox = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.dnsValueTextBox = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.dnsPreferenceNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.dnsConfigListView = new System.Windows.Forms.ListView();
+            this.dnsAddButton = new System.Windows.Forms.Button();
+            this.dnsRemoveButton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dnsPreferenceNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -124,6 +137,245 @@
             this.tabPage1.Size = new System.Drawing.Size(895, 400);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "ICMP";
+            // 
+            // icmpButton
+            // 
+            this.icmpButton.Location = new System.Drawing.Point(266, 234);
+            this.icmpButton.Name = "icmpButton";
+            this.icmpButton.Size = new System.Drawing.Size(91, 23);
+            this.icmpButton.TabIndex = 29;
+            this.icmpButton.Text = "Send Packet";
+            this.icmpButton.UseVisualStyleBackColor = true;
+            this.icmpButton.Click += new System.EventHandler(this.icmpButton_Click);
+            // 
+            // pointerTextBox
+            // 
+            this.pointerTextBox.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pointerTextBox.Location = new System.Drawing.Point(52, 234);
+            this.pointerTextBox.Name = "pointerTextBox";
+            this.pointerTextBox.ReadOnly = true;
+            this.pointerTextBox.Size = new System.Drawing.Size(100, 20);
+            this.pointerTextBox.TabIndex = 28;
+            this.pointerTextBox.TextChanged += new System.EventHandler(this.pointerTextBox_TextChanged);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(6, 237);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(40, 13);
+            this.label14.TabIndex = 27;
+            this.label14.Text = "Pointer";
+            // 
+            // dataTextBox
+            // 
+            this.dataTextBox.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataTextBox.Location = new System.Drawing.Point(42, 272);
+            this.dataTextBox.Multiline = true;
+            this.dataTextBox.Name = "dataTextBox";
+            this.dataTextBox.ReadOnly = true;
+            this.dataTextBox.Size = new System.Drawing.Size(315, 122);
+            this.dataTextBox.TabIndex = 26;
+            this.dataTextBox.TextChanged += new System.EventHandler(this.dataTextBox_TextChanged);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(6, 272);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(30, 13);
+            this.label13.TabIndex = 25;
+            this.label13.Text = "Data";
+            // 
+            // tranTimestampTextBox
+            // 
+            this.tranTimestampTextBox.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tranTimestampTextBox.Location = new System.Drawing.Point(266, 205);
+            this.tranTimestampTextBox.Name = "tranTimestampTextBox";
+            this.tranTimestampTextBox.ReadOnly = true;
+            this.tranTimestampTextBox.Size = new System.Drawing.Size(91, 20);
+            this.tranTimestampTextBox.TabIndex = 24;
+            this.tranTimestampTextBox.TextChanged += new System.EventHandler(this.tranTimestampTextBox_TextChanged);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(182, 208);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(86, 13);
+            this.label12.TabIndex = 23;
+            this.label12.Text = "Tran. Timestamp";
+            // 
+            // recvTimestampTextBox
+            // 
+            this.recvTimestampTextBox.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.recvTimestampTextBox.Location = new System.Drawing.Point(102, 204);
+            this.recvTimestampTextBox.Name = "recvTimestampTextBox";
+            this.recvTimestampTextBox.ReadOnly = true;
+            this.recvTimestampTextBox.Size = new System.Drawing.Size(74, 20);
+            this.recvTimestampTextBox.TabIndex = 22;
+            this.recvTimestampTextBox.TextChanged += new System.EventHandler(this.recvTimestampTextBox_TextChanged);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(6, 207);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(90, 13);
+            this.label11.TabIndex = 21;
+            this.label11.Text = "Recv. Timestamp";
+            // 
+            // origTimestampTextBox
+            // 
+            this.origTimestampTextBox.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.origTimestampTextBox.Location = new System.Drawing.Point(266, 168);
+            this.origTimestampTextBox.Name = "origTimestampTextBox";
+            this.origTimestampTextBox.ReadOnly = true;
+            this.origTimestampTextBox.Size = new System.Drawing.Size(91, 20);
+            this.origTimestampTextBox.TabIndex = 20;
+            this.origTimestampTextBox.TextChanged += new System.EventHandler(this.origTimestampTextBox_TextChanged);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(182, 171);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(83, 13);
+            this.label10.TabIndex = 19;
+            this.label10.Text = "Orig. Timestamp";
+            // 
+            // gwInetAddrTextBox
+            // 
+            this.gwInetAddrTextBox.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gwInetAddrTextBox.Location = new System.Drawing.Point(84, 167);
+            this.gwInetAddrTextBox.Name = "gwInetAddrTextBox";
+            this.gwInetAddrTextBox.ReadOnly = true;
+            this.gwInetAddrTextBox.Size = new System.Drawing.Size(92, 20);
+            this.gwInetAddrTextBox.TabIndex = 18;
+            this.gwInetAddrTextBox.TextChanged += new System.EventHandler(this.gwInetAddrTextBox_TextChanged);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(6, 171);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(72, 13);
+            this.label9.TabIndex = 17;
+            this.label9.Text = "GW Inet Addr";
+            // 
+            // origDatagramTextBox
+            // 
+            this.origDatagramTextBox.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.origDatagramTextBox.Location = new System.Drawing.Point(266, 131);
+            this.origDatagramTextBox.Name = "origDatagramTextBox";
+            this.origDatagramTextBox.ReadOnly = true;
+            this.origDatagramTextBox.Size = new System.Drawing.Size(91, 20);
+            this.origDatagramTextBox.TabIndex = 16;
+            this.origDatagramTextBox.TextChanged += new System.EventHandler(this.origDatagramTextBox_TextChanged);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(182, 135);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(78, 13);
+            this.label8.TabIndex = 15;
+            this.label8.Text = "Orig. Datagram";
+            // 
+            // inetHeaderTextBox
+            // 
+            this.inetHeaderTextBox.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.inetHeaderTextBox.Location = new System.Drawing.Point(84, 130);
+            this.inetHeaderTextBox.Name = "inetHeaderTextBox";
+            this.inetHeaderTextBox.ReadOnly = true;
+            this.inetHeaderTextBox.Size = new System.Drawing.Size(92, 20);
+            this.inetHeaderTextBox.TabIndex = 14;
+            this.inetHeaderTextBox.TextChanged += new System.EventHandler(this.inetHeaderTextBox_TextChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(15, 134);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(63, 13);
+            this.label7.TabIndex = 13;
+            this.label7.Text = "Inet Header";
+            // 
+            // sequenceTextBox
+            // 
+            this.sequenceTextBox.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.sequenceTextBox.Location = new System.Drawing.Point(266, 93);
+            this.sequenceTextBox.Name = "sequenceTextBox";
+            this.sequenceTextBox.ReadOnly = true;
+            this.sequenceTextBox.Size = new System.Drawing.Size(91, 20);
+            this.sequenceTextBox.TabIndex = 12;
+            this.sequenceTextBox.TextChanged += new System.EventHandler(this.sequenceTextBox_TextChanged);
+            // 
+            // identifierTextBox
+            // 
+            this.identifierTextBox.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.identifierTextBox.Location = new System.Drawing.Point(84, 93);
+            this.identifierTextBox.Name = "identifierTextBox";
+            this.identifierTextBox.ReadOnly = true;
+            this.identifierTextBox.Size = new System.Drawing.Size(44, 20);
+            this.identifierTextBox.TabIndex = 11;
+            this.identifierTextBox.TextChanged += new System.EventHandler(this.identifierTextBox_TextChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(204, 97);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(56, 13);
+            this.label6.TabIndex = 10;
+            this.label6.Text = "Sequence";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(31, 95);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(47, 13);
+            this.label5.TabIndex = 9;
+            this.label5.Text = "Identifier";
+            // 
+            // checksumTextBox
+            // 
+            this.checksumTextBox.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checksumTextBox.Location = new System.Drawing.Point(266, 51);
+            this.checksumTextBox.Name = "checksumTextBox";
+            this.checksumTextBox.ReadOnly = true;
+            this.checksumTextBox.Size = new System.Drawing.Size(91, 20);
+            this.checksumTextBox.TabIndex = 8;
+            this.checksumTextBox.TextChanged += new System.EventHandler(this.checksumTextBox_TextChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(203, 55);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(57, 13);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Checksum";
+            // 
+            // codeTextBox
+            // 
+            this.codeTextBox.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.codeTextBox.Location = new System.Drawing.Point(84, 51);
+            this.codeTextBox.Name = "codeTextBox";
+            this.codeTextBox.ReadOnly = true;
+            this.codeTextBox.Size = new System.Drawing.Size(44, 20);
+            this.codeTextBox.TabIndex = 6;
+            this.codeTextBox.TextChanged += new System.EventHandler(this.codeTextBox_TextChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(46, 55);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(32, 13);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Code";
             // 
             // RFCtext
             // 
@@ -185,282 +437,164 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage2.Controls.Add(this.dnsRemoveButton);
+            this.tabPage2.Controls.Add(this.dnsAddButton);
+            this.tabPage2.Controls.Add(this.dnsConfigListView);
+            this.tabPage2.Controls.Add(this.dnsPreferenceNumericUpDown);
+            this.tabPage2.Controls.Add(this.label18);
+            this.tabPage2.Controls.Add(this.dnsValueTextBox);
+            this.tabPage2.Controls.Add(this.label17);
+            this.tabPage2.Controls.Add(this.domainTextBox);
+            this.tabPage2.Controls.Add(this.label16);
+            this.tabPage2.Controls.Add(this.rrComboBox);
+            this.tabPage2.Controls.Add(this.label15);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(895, 400);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "DNS";
-            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // tabPage3
             // 
+            this.tabPage3.BackColor = System.Drawing.SystemColors.Control;
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage3.Size = new System.Drawing.Size(895, 400);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "DHCP";
-            this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // tabPage4
             // 
+            this.tabPage4.BackColor = System.Drawing.SystemColors.Control;
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage4.Size = new System.Drawing.Size(895, 400);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "SNMP";
-            this.tabPage4.UseVisualStyleBackColor = true;
             // 
             // tabPage5
             // 
+            this.tabPage5.BackColor = System.Drawing.SystemColors.Control;
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage5.Size = new System.Drawing.Size(895, 400);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "LDAP";
-            this.tabPage5.UseVisualStyleBackColor = true;
             // 
-            // label3
+            // label15
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(46, 55);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(32, 13);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Code";
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(6, 3);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(91, 13);
+            this.label15.TabIndex = 0;
+            this.label15.Text = "Resource Record";
             // 
-            // codeTextBox
+            // rrComboBox
             // 
-            this.codeTextBox.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.codeTextBox.Location = new System.Drawing.Point(84, 51);
-            this.codeTextBox.Name = "codeTextBox";
-            this.codeTextBox.ReadOnly = true;
-            this.codeTextBox.Size = new System.Drawing.Size(44, 20);
-            this.codeTextBox.TabIndex = 6;
-            this.codeTextBox.TextChanged += new System.EventHandler(this.codeTextBox_TextChanged);
+            this.rrComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.rrComboBox.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rrComboBox.FormattingEnabled = true;
+            this.rrComboBox.Items.AddRange(new object[] {
+            "A",
+            "CNAME",
+            "MX",
+            "NS",
+            "PTR",
+            "TXT"});
+            this.rrComboBox.Location = new System.Drawing.Point(6, 19);
+            this.rrComboBox.Name = "rrComboBox";
+            this.rrComboBox.Size = new System.Drawing.Size(91, 23);
+            this.rrComboBox.TabIndex = 1;
+            this.rrComboBox.SelectedIndexChanged += new System.EventHandler(this.rrComboBox_SelectedIndexChanged);
             // 
-            // label4
+            // label16
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(203, 55);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(57, 13);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Checksum";
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(119, 3);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(43, 13);
+            this.label16.TabIndex = 2;
+            this.label16.Text = "Domain";
             // 
-            // checksumTextBox
+            // domainTextBox
             // 
-            this.checksumTextBox.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checksumTextBox.Location = new System.Drawing.Point(266, 51);
-            this.checksumTextBox.Name = "checksumTextBox";
-            this.checksumTextBox.ReadOnly = true;
-            this.checksumTextBox.Size = new System.Drawing.Size(91, 20);
-            this.checksumTextBox.TabIndex = 8;
-            this.checksumTextBox.TextChanged += new System.EventHandler(this.checksumTextBox_TextChanged);
+            this.domainTextBox.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.domainTextBox.Location = new System.Drawing.Point(122, 19);
+            this.domainTextBox.Name = "domainTextBox";
+            this.domainTextBox.ReadOnly = true;
+            this.domainTextBox.Size = new System.Drawing.Size(219, 20);
+            this.domainTextBox.TabIndex = 3;
             // 
-            // label5
+            // label17
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(31, 95);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(47, 13);
-            this.label5.TabIndex = 9;
-            this.label5.Text = "Identifier";
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(398, 3);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(34, 13);
+            this.label17.TabIndex = 4;
+            this.label17.Text = "Value";
             // 
-            // label6
+            // dnsValueTextBox
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(204, 97);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(56, 13);
-            this.label6.TabIndex = 10;
-            this.label6.Text = "Sequence";
+            this.dnsValueTextBox.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dnsValueTextBox.Location = new System.Drawing.Point(401, 19);
+            this.dnsValueTextBox.Name = "dnsValueTextBox";
+            this.dnsValueTextBox.ReadOnly = true;
+            this.dnsValueTextBox.Size = new System.Drawing.Size(219, 20);
+            this.dnsValueTextBox.TabIndex = 5;
             // 
-            // identifierTextBox
+            // label18
             // 
-            this.identifierTextBox.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.identifierTextBox.Location = new System.Drawing.Point(84, 93);
-            this.identifierTextBox.Name = "identifierTextBox";
-            this.identifierTextBox.ReadOnly = true;
-            this.identifierTextBox.Size = new System.Drawing.Size(44, 20);
-            this.identifierTextBox.TabIndex = 11;
-            this.identifierTextBox.TextChanged += new System.EventHandler(this.identifierTextBox_TextChanged);
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(674, 3);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(59, 13);
+            this.label18.TabIndex = 6;
+            this.label18.Text = "Preference";
             // 
-            // sequenceTextBox
+            // dnsPreferenceNumericUpDown
             // 
-            this.sequenceTextBox.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.sequenceTextBox.Location = new System.Drawing.Point(266, 93);
-            this.sequenceTextBox.Name = "sequenceTextBox";
-            this.sequenceTextBox.ReadOnly = true;
-            this.sequenceTextBox.Size = new System.Drawing.Size(91, 20);
-            this.sequenceTextBox.TabIndex = 12;
-            this.sequenceTextBox.TextChanged += new System.EventHandler(this.sequenceTextBox_TextChanged);
+            this.dnsPreferenceNumericUpDown.Location = new System.Drawing.Point(677, 19);
+            this.dnsPreferenceNumericUpDown.Name = "dnsPreferenceNumericUpDown";
+            this.dnsPreferenceNumericUpDown.ReadOnly = true;
+            this.dnsPreferenceNumericUpDown.Size = new System.Drawing.Size(56, 20);
+            this.dnsPreferenceNumericUpDown.TabIndex = 7;
             // 
-            // label7
+            // dnsConfigListView
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(15, 134);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(63, 13);
-            this.label7.TabIndex = 13;
-            this.label7.Text = "Inet Header";
+            this.dnsConfigListView.BackColor = System.Drawing.SystemColors.Control;
+            this.dnsConfigListView.HideSelection = false;
+            this.dnsConfigListView.Location = new System.Drawing.Point(6, 77);
+            this.dnsConfigListView.Name = "dnsConfigListView";
+            this.dnsConfigListView.Size = new System.Drawing.Size(883, 317);
+            this.dnsConfigListView.TabIndex = 8;
+            this.dnsConfigListView.UseCompatibleStateImageBehavior = false;
+            this.dnsConfigListView.View = System.Windows.Forms.View.Details;
             // 
-            // inetHeaderTextBox
+            // dnsAddButton
             // 
-            this.inetHeaderTextBox.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.inetHeaderTextBox.Location = new System.Drawing.Point(84, 130);
-            this.inetHeaderTextBox.Name = "inetHeaderTextBox";
-            this.inetHeaderTextBox.ReadOnly = true;
-            this.inetHeaderTextBox.Size = new System.Drawing.Size(92, 20);
-            this.inetHeaderTextBox.TabIndex = 14;
-            this.inetHeaderTextBox.TextChanged += new System.EventHandler(this.inetHeaderTextBox_TextChanged);
+            this.dnsAddButton.Location = new System.Drawing.Point(122, 48);
+            this.dnsAddButton.Name = "dnsAddButton";
+            this.dnsAddButton.Size = new System.Drawing.Size(59, 23);
+            this.dnsAddButton.TabIndex = 9;
+            this.dnsAddButton.Text = "Add";
+            this.dnsAddButton.UseVisualStyleBackColor = true;
+            this.dnsAddButton.Click += new System.EventHandler(this.dnsAddButton_Click);
             // 
-            // label8
+            // dnsRemoveButton
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(182, 135);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(78, 13);
-            this.label8.TabIndex = 15;
-            this.label8.Text = "Orig. Datagram";
-            // 
-            // origDatagramTextBox
-            // 
-            this.origDatagramTextBox.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.origDatagramTextBox.Location = new System.Drawing.Point(266, 131);
-            this.origDatagramTextBox.Name = "origDatagramTextBox";
-            this.origDatagramTextBox.ReadOnly = true;
-            this.origDatagramTextBox.Size = new System.Drawing.Size(91, 20);
-            this.origDatagramTextBox.TabIndex = 16;
-            this.origDatagramTextBox.TextChanged += new System.EventHandler(this.origDatagramTextBox_TextChanged);
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(6, 171);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(72, 13);
-            this.label9.TabIndex = 17;
-            this.label9.Text = "GW Inet Addr";
-            // 
-            // gwInetAddrTextBox
-            // 
-            this.gwInetAddrTextBox.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gwInetAddrTextBox.Location = new System.Drawing.Point(84, 167);
-            this.gwInetAddrTextBox.Name = "gwInetAddrTextBox";
-            this.gwInetAddrTextBox.ReadOnly = true;
-            this.gwInetAddrTextBox.Size = new System.Drawing.Size(92, 20);
-            this.gwInetAddrTextBox.TabIndex = 18;
-            this.gwInetAddrTextBox.TextChanged += new System.EventHandler(this.gwInetAddrTextBox_TextChanged);
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(182, 171);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(83, 13);
-            this.label10.TabIndex = 19;
-            this.label10.Text = "Orig. Timestamp";
-            // 
-            // origTimestampTextBox
-            // 
-            this.origTimestampTextBox.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.origTimestampTextBox.Location = new System.Drawing.Point(266, 168);
-            this.origTimestampTextBox.Name = "origTimestampTextBox";
-            this.origTimestampTextBox.ReadOnly = true;
-            this.origTimestampTextBox.Size = new System.Drawing.Size(91, 20);
-            this.origTimestampTextBox.TabIndex = 20;
-            this.origTimestampTextBox.TextChanged += new System.EventHandler(this.origTimestampTextBox_TextChanged);
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(6, 207);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(90, 13);
-            this.label11.TabIndex = 21;
-            this.label11.Text = "Recv. Timestamp";
-            // 
-            // recvTimestampTextBox
-            // 
-            this.recvTimestampTextBox.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.recvTimestampTextBox.Location = new System.Drawing.Point(102, 204);
-            this.recvTimestampTextBox.Name = "recvTimestampTextBox";
-            this.recvTimestampTextBox.ReadOnly = true;
-            this.recvTimestampTextBox.Size = new System.Drawing.Size(74, 20);
-            this.recvTimestampTextBox.TabIndex = 22;
-            this.recvTimestampTextBox.TextChanged += new System.EventHandler(this.recvTimestampTextBox_TextChanged);
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(182, 208);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(86, 13);
-            this.label12.TabIndex = 23;
-            this.label12.Text = "Tran. Timestamp";
-            // 
-            // tranTimestampTextBox
-            // 
-            this.tranTimestampTextBox.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tranTimestampTextBox.Location = new System.Drawing.Point(266, 205);
-            this.tranTimestampTextBox.Name = "tranTimestampTextBox";
-            this.tranTimestampTextBox.ReadOnly = true;
-            this.tranTimestampTextBox.Size = new System.Drawing.Size(91, 20);
-            this.tranTimestampTextBox.TabIndex = 24;
-            this.tranTimestampTextBox.TextChanged += new System.EventHandler(this.tranTimestampTextBox_TextChanged);
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(6, 272);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(30, 13);
-            this.label13.TabIndex = 25;
-            this.label13.Text = "Data";
-            // 
-            // dataTextBox
-            // 
-            this.dataTextBox.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataTextBox.Location = new System.Drawing.Point(42, 272);
-            this.dataTextBox.Multiline = true;
-            this.dataTextBox.Name = "dataTextBox";
-            this.dataTextBox.ReadOnly = true;
-            this.dataTextBox.Size = new System.Drawing.Size(315, 122);
-            this.dataTextBox.TabIndex = 26;
-            this.dataTextBox.TextChanged += new System.EventHandler(this.dataTextBox_TextChanged);
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(6, 237);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(40, 13);
-            this.label14.TabIndex = 27;
-            this.label14.Text = "Pointer";
-            // 
-            // pointerTextBox
-            // 
-            this.pointerTextBox.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pointerTextBox.Location = new System.Drawing.Point(52, 234);
-            this.pointerTextBox.Name = "pointerTextBox";
-            this.pointerTextBox.ReadOnly = true;
-            this.pointerTextBox.Size = new System.Drawing.Size(100, 20);
-            this.pointerTextBox.TabIndex = 28;
-            this.pointerTextBox.TextChanged += new System.EventHandler(this.pointerTextBox_TextChanged);
-            // 
-            // icmpButton
-            // 
-            this.icmpButton.Location = new System.Drawing.Point(266, 234);
-            this.icmpButton.Name = "icmpButton";
-            this.icmpButton.Size = new System.Drawing.Size(91, 23);
-            this.icmpButton.TabIndex = 29;
-            this.icmpButton.Text = "Send Packet";
-            this.icmpButton.UseVisualStyleBackColor = true;
-            this.icmpButton.Click += new System.EventHandler(this.icmpButton_Click);
+            this.dnsRemoveButton.Location = new System.Drawing.Point(282, 48);
+            this.dnsRemoveButton.Name = "dnsRemoveButton";
+            this.dnsRemoveButton.Size = new System.Drawing.Size(59, 23);
+            this.dnsRemoveButton.TabIndex = 10;
+            this.dnsRemoveButton.Text = "Remove";
+            this.dnsRemoveButton.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -476,6 +610,9 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dnsPreferenceNumericUpDown)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -518,6 +655,17 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox pointerTextBox;
         private System.Windows.Forms.Button icmpButton;
+        private System.Windows.Forms.ComboBox rrComboBox;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox domainTextBox;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.NumericUpDown dnsPreferenceNumericUpDown;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.TextBox dnsValueTextBox;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.ListView dnsConfigListView;
+        private System.Windows.Forms.Button dnsRemoveButton;
+        private System.Windows.Forms.Button dnsAddButton;
     }
 }
 
