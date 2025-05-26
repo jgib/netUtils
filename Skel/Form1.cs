@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -1460,11 +1461,10 @@ namespace netUtils
             }
         }
 
-        private void dnsStartServerButton_Click(object sender, EventArgs e)
+        private async void runDNSserver()
         {
             if (dnsUdpRadio.Checked)
             {
-                misc.dnsServerRunning = true;
                 int dnsPort = int.Parse(dnsPortNumericUpDown.Value.ToString());
                 verbose.write($"Starting DNS server UDP:{dnsPort}");
                 UdpClient dnsListener = new UdpClient(dnsPort);
@@ -1476,6 +1476,11 @@ namespace netUtils
                     while (misc.dnsServerRunning)
                     {
                         byte[] dnsData = dnsListener.Receive(ref groupEP);
+                        if (!misc.dnsServerRunning)
+                        {
+                            verbose.write("Ceaseing incomming DNS connections");
+                            break;
+                        }
                         verbose.write($"Received DNS data:");
                         misc.printPayload(dnsData.ToList<byte>());
 
@@ -1498,7 +1503,7 @@ namespace netUtils
 
                         for (int i = 0; i < dnsData.Length; i++)
                         {
-                            switch(i)
+                            switch (i)
                             {
                                 case 1:
                                     dnsID = (UInt16)dnsData[i - 1];
@@ -1510,7 +1515,8 @@ namespace netUtils
                                     if ((dnsData[i] & 0b10000000) == 1)
                                     {
                                         dnsQR = true;
-                                    } else
+                                    }
+                                    else
                                     {
                                         dnsQR = false;
                                     }
@@ -1522,7 +1528,8 @@ namespace netUtils
                                     if ((dnsData[i] & 0b00000100) == 1)
                                     {
                                         dnsAA = true;
-                                    } else
+                                    }
+                                    else
                                     {
                                         dnsAA = false;
                                     }
@@ -1531,7 +1538,8 @@ namespace netUtils
                                     if ((dnsData[i] & 0b00000010) == 1)
                                     {
                                         dnsTC = true;
-                                    } else
+                                    }
+                                    else
                                     {
                                         dnsTC = false;
                                     }
@@ -1540,7 +1548,9 @@ namespace netUtils
                                     if ((dnsData[i] & 0b00000001) == 1)
                                     {
                                         dnsRD = true;
-                                    } else {
+                                    }
+                                    else
+                                    {
                                         dnsRD = false;
                                     }
                                     verbose.write($"RD: {dnsRD}");
@@ -1550,7 +1560,8 @@ namespace netUtils
                                     if ((dnsData[i] & 0b10000000) == 1)
                                     {
                                         dnsRA = true;
-                                    } else
+                                    }
+                                    else
                                     {
                                         dnsRA = false;
                                     }
@@ -1589,7 +1600,7 @@ namespace netUtils
                                     dnsARCOUNT <<= 8;
                                     dnsARCOUNT += (UInt16)dnsData[i];
                                     verbose.write($"ARCOUNT: {dnsARCOUNT}");
-                                    
+
                                     break;
                             }
                         }
@@ -1623,22 +1634,32 @@ namespace netUtils
                             }
                         }
                     }
-                } catch (SocketException ex)
+                }
+                catch (SocketException ex)
                 {
                     verbose.write($"EXCEPTION: {ex.ToString()}");
                     MessageBox.Show(ex.ToString(), "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
-                } finally
+                }
+                finally
                 {
-                    verbose.write($"Closing DNS socket");
+                    verbose.write($"Closing active DNS socket");
                     dnsListener.Close();
                 }
             }
         }
 
+        private void dnsStartServerButton_Click(object sender, EventArgs e)
+        {
+            //runDNSserver();
+            misc.dnsServerRunning = true;
+            Task.Run(() => runDNSserver());
+        }
+
         private void dnsStopServerButton_Click(object sender, EventArgs e)
         {
             misc.dnsServerRunning = false;
+            //send udp or tcp connection to localhost to close active socket
         }
     }
 }
