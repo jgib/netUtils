@@ -13,11 +13,27 @@ using MySql.Data;
 using MySql.Data.MySqlClient;
 using System.Threading;
 using System.Text.RegularExpressions;
+using System.Net.Sockets;
+using System.Net;
 
 namespace netUtils
 {
     public class misc
     {
+        public static void sendUDPdata(byte[] payload, string ipAddr, int port)
+        {
+            verbose.write($"Creating UDP socket to {ipAddr}:{port}");
+            Socket udpClientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Raw, ProtocolType.Udp);
+            EndPoint udpClientEP = new IPEndPoint(IPAddress.Parse(ipAddr), port);
+            //udpClientSocket.Bind(udpClientEP);
+            udpClientSocket.Connect(udpClientEP);
+            verbose.write("Sending data:");
+            printPayload(payload.ToList());
+            int nBytes = udpClientSocket.Send(payload);
+            verbose.write($"Sent {nBytes} Bytes");
+            udpClientSocket.Close();
+            verbose.write("Connection closed");
+        }
         public static void printPayload(List<byte> input)
         {
             string output = "";

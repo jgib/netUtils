@@ -5,8 +5,10 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -1470,7 +1472,7 @@ namespace netUtils
                 UdpClient dnsListener = new UdpClient(dnsPort);
                 verbose.write($"Started listen socket");
                 IPEndPoint groupEP = new IPEndPoint(IPAddress.Any, dnsPort);
-                verbose.write($"Created endpoint group");
+                verbose.write($"Created endpoint group for socket {groupEP.Address.ToString()}:{groupEP.Port}");
                 try
                 {
                     while (misc.dnsServerRunning)
@@ -1478,7 +1480,7 @@ namespace netUtils
                         byte[] dnsData = dnsListener.Receive(ref groupEP);
                         if (!misc.dnsServerRunning)
                         {
-                            verbose.write("Ceaseing incomming DNS connections");
+                            verbose.write($"Cease incomming DNS connections for socket {groupEP.Address.ToString()}:{groupEP.Port}");
                             break;
                         }
                         verbose.write($"Received DNS data:");
@@ -1633,6 +1635,60 @@ namespace netUtils
                                 verbose.write($"QCLASS: {dnsQCLASS}");
                             }
                         }
+
+                        switch (dnsQTYPE)
+                        {
+                            case 1:
+                                // A
+                                // check if A record exists in config that matches the request
+                                // send back  the same payload with answer section appended.
+                                verbose.write("Received request for resource record type [A]");
+                                foreach (ListViewItem lvi in dnsConfigListView.Items)
+                                {
+                                    // do regex that matches: www IN A 1.2.3.4
+                                    string pattern = @"(\S+)\s+IN\s+A\s+(\d+)\.(\d+)\.(\d+)\.(\d+)";
+                                    if (Regex.IsMatch(lvi.Text, pattern))
+                                    {
+                                        verbose.write($"Found matching record in configuration [{lvi.Text}]");
+                                        Match match = Regex.Match(lvi.Text, pattern);
+                                        if (match.Groups.Count == 6)
+                                        {
+                                            if (string.Compare(match.Groups[1].Value, dnsQNAME.TrimEnd('.'), true) == 0)
+                                            {
+                                                List<byte> dnsReplyData = dnsData.ToList<byte>();
+                                                dnsReplyData.Add(192); // DNS compression
+                                                dnsReplyData.Add(12); // Point to byte 12
+                                                dnsReplyData.Add(1); // A RR
+                                                dnsReplyData.Add(1); // IN
+                                                dnsReplyData.Add(0x03); // TTL of 900s
+                                                dnsReplyData.Add(0x84);
+                                                dnsReplyData.Add(4); // Length of data
+                                                dnsReplyData.Add(byte.Parse(match.Groups[2].Value));
+                                                dnsReplyData.Add(byte.Parse(match.Groups[3].Value));
+                                                dnsReplyData.Add(byte.Parse(match.Groups[4].Value));
+                                                dnsReplyData.Add(byte.Parse(match.Groups[5].Value));
+                                                misc.sendUDPdata(dnsReplyData.ToArray(), groupEP.Address.ToString(), groupEP.Port);
+                                            }
+                                        }
+                                    }
+                                }
+                                break;
+                            case 2:
+                                // NS
+                                break;
+                            case 5:
+                                // CNAME
+                                break;
+                            case 12:
+                                // PTR
+                                break;
+                            case 15:
+                                // MX
+                                break;
+                            case 16:
+                                // TXT
+                                break;
+                        }
                     }
                 }
                 catch (SocketException ex)
@@ -1660,6 +1716,19 @@ namespace netUtils
         {
             misc.dnsServerRunning = false;
             //send udp or tcp connection to localhost to close active socket
+            //misc.sendUDPdata(Encoding.ASCII.GetBytes("STOP DNS SOCKET"), "127.0.0.1", 53);
+            foreach (NetworkInterface netInterface in NetworkInterface.GetAllNetworkInterfaces())
+            {
+                IPInterfaceProperties ipProperties = netInterface.GetIPProperties();
+                foreach (UnicastIPAddressInformation addr in ipProperties.UnicastAddresses)
+                {
+                    if (addr.Address.AddressFamily == AddressFamily.InterNetwork)
+                    {
+                        verbose.write($"Sending disconnect packet to {addr.Address.ToString()}:{dnsPortNumericUpDown.Value}");
+                        misc.sendUDPdata(Encoding.ASCII.GetBytes("STOP DNS SOCKET"), addr.Address.ToString(), (int)dnsPortNumericUpDown.Value);
+                    }
+                }
+            } // needs work... not actually closing the current listening socket for some reason...
         }
     }
 }
