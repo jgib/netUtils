@@ -1667,7 +1667,8 @@ namespace netUtils
                                                 dnsReplyData.Add(byte.Parse(match.Groups[3].Value));
                                                 dnsReplyData.Add(byte.Parse(match.Groups[4].Value));
                                                 dnsReplyData.Add(byte.Parse(match.Groups[5].Value));
-                                                misc.sendUDPdata(dnsReplyData.ToArray(), groupEP.Address.ToString(), groupEP.Port);
+                                                IPEndPoint dnsLocalIP = dnsListener.Client.LocalEndPoint as IPEndPoint;
+                                                misc.sendUDPdata(dnsReplyData.ToArray(), groupEP.Address.ToString(), groupEP.Port, dnsLocalIP.Address.ToString(), dnsLocalIP.Port);
                                             }
                                         }
                                     }

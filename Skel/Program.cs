@@ -20,18 +20,27 @@ namespace netUtils
 {
     public class misc
     {
-        public static void sendUDPdata(byte[] payload, string ipAddr, int port)
+        public static void sendUDPdata(byte[] payload, string dstIP, int dstPort, string srcIP = "", int srcPort = 0)
         {
-            verbose.write($"Creating UDP socket to {ipAddr}:{port}");
-            Socket udpClientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Raw, ProtocolType.Udp);
-            EndPoint udpClientEP = new IPEndPoint(IPAddress.Parse(ipAddr), port);
-            //udpClientSocket.Bind(udpClientEP);
-            udpClientSocket.Connect(udpClientEP);
+            verbose.write($"Creating UDP socket");
+            Socket udpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Raw, ProtocolType.Udp);
+            verbose.write($"Creating remote endpoint [{dstIP}:{dstPort}]");
+            EndPoint remoteEP = new IPEndPoint(IPAddress.Parse(dstIP), dstPort);
+    
+            if (srcIP != "")
+            {
+                verbose.write($"Creating local endpoint [{srcIP}:{srcPort}]");
+                EndPoint localEP = new IPEndPoint(IPAddress.Parse(srcIP), srcPort);
+                verbose.write($"Binding socket");
+                udpSocket.Bind(localEP);
+            }
+            verbose.write($"Connecting to remote endpoint");
+            udpSocket.Connect(remoteEP);
             verbose.write("Sending data:");
             printPayload(payload.ToList());
-            int nBytes = udpClientSocket.Send(payload);
+            int nBytes = udpSocket.Send(payload);
             verbose.write($"Sent {nBytes} Bytes");
-            udpClientSocket.Close();
+            udpSocket.Close();
             verbose.write("Connection closed");
         }
         public static void printPayload(List<byte> input)
