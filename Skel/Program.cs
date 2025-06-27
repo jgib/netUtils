@@ -20,12 +20,19 @@ namespace netUtils
 {
     public class misc
     {
+        public static string dhcpOutputText = "";
+        public static CancellationTokenSource dhcpCancelToken = new CancellationTokenSource();
         public struct dhcpOptions
         {
             public string poolStart;
             public string poolEnd;
             public int serverPort;
             public int clientPort;
+        }
+
+        public static void dhcpLog(string input)
+        {
+            dhcpOutputText += $"{input}\r\n";
         }
 
         public static void printPayload(List<byte> input)

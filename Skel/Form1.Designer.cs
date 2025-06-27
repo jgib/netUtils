@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -46,6 +47,7 @@
             this.serverPortDHCPtextbox = new System.Windows.Forms.TextBox();
             this.clientPortDHCPtextbox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.SuspendLayout();
@@ -67,6 +69,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tabPage1.Controls.Add(this.clientPortDHCPtextbox);
             this.tabPage1.Controls.Add(this.label4);
             this.tabPage1.Controls.Add(this.serverPortDHCPtextbox);
@@ -116,12 +119,15 @@
             // 
             // DHCPoutput
             // 
+            this.DHCPoutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.DHCPoutput.Font = new System.Drawing.Font("Cascadia Mono", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DHCPoutput.Location = new System.Drawing.Point(0, 289);
+            this.DHCPoutput.Location = new System.Drawing.Point(-1, 289);
             this.DHCPoutput.Name = "DHCPoutput";
-            this.DHCPoutput.Size = new System.Drawing.Size(658, 172);
+            this.DHCPoutput.ReadOnly = true;
+            this.DHCPoutput.Size = new System.Drawing.Size(658, 169);
             this.DHCPoutput.TabIndex = 0;
             this.DHCPoutput.Text = "";
+            this.DHCPoutput.TextChanged += new System.EventHandler(this.DHCPoutput_TextChanged);
             // 
             // tabPage2
             // 
@@ -252,6 +258,11 @@
             this.label4.TabIndex = 9;
             this.label4.Text = "Client Port:";
             // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -295,6 +306,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox clientPortDHCPtextbox;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

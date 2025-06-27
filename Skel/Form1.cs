@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -105,21 +106,21 @@ namespace netUtils
 
         }
 
-        private void startServerDHCPbutton_Click(object sender, EventArgs e)
+        private async void startServerDHCPbutton_Click(object sender, EventArgs e)
         {
             startServerDHCPbutton.Enabled = false;
             stopServerDHCPbutton.Enabled = true;
-            DHCPoutput.Text += "Staring DHCP Server...\r\n";
+            misc.dhcpLog("Staring DHCP Server...");
             
             if (!misc.validateIP(poolStartDHCPtextbox.Text))
             {
-                DHCPoutput.Text += $"Invalid pool start IP address [{poolStartDHCPtextbox.Text}]\r\n";
+                misc.dhcpLog($"Invalid pool start IP address [{poolStartDHCPtextbox.Text}]");
                 stopServerDHCPbutton_Click(sender, e);
                 return;
             }
             if (!misc.validateIP(poolStopDHCPtextbox.Text))
             {
-                DHCPoutput.Text += $"Invalid pool stop IP address [{poolStopDHCPtextbox.Text}]\r\n";
+                misc.dhcpLog($"Invalid pool stop IP address [{poolStopDHCPtextbox.Text}]");
                 stopServerDHCPbutton_Click(sender , e);
                 return;
             }
@@ -130,7 +131,7 @@ namespace netUtils
 
             if (ip1 > ip2)
             {
-                DHCPoutput.Text += $"Begining of DHCP pool is larger than end of pool [{poolStartDHCPtextbox.Text} - {poolStopDHCPtextbox.Text}]\r\n";
+                misc.dhcpLog($"Begining of DHCP pool is larger than end of pool [{poolStartDHCPtextbox.Text} - {poolStopDHCPtextbox.Text}]");
                 stopServerDHCPbutton_Click(sender, e);
                 return;
             }
@@ -141,7 +142,7 @@ namespace netUtils
                 UInt16 dhcpServerPort = UInt16.Parse(serverPortDHCPtextbox.Text);
             } catch (OverflowException ex)
             {
-                DHCPoutput.Text += $"Invalid server port number [{serverPortDHCPtextbox.Text}]\r\nMust be valid 16-bit unsigned integer, i.e. 0 - 65535\r\n";
+                misc.dhcpLog($"Invalid server port number [{serverPortDHCPtextbox.Text}]\r\nMust be valid 16-bit unsigned integer, i.e. 0 - 65535");
                 stopServerDHCPbutton_Click(sender, e);
                 return;
             }
@@ -151,7 +152,7 @@ namespace netUtils
             }
             catch (OverflowException ex)
             {
-                DHCPoutput.Text += $"Invalid client port number [{clientPortDHCPtextbox.Text}]\r\nMust be valid 16-bit unsigned integer, i.e. 0 - 65535\r\n";
+                misc.dhcpLog($"Invalid client port number [{clientPortDHCPtextbox.Text}]\r\nMust be valid 16-bit unsigned integer, i.e. 0 - 65535");
                 stopServerDHCPbutton_Click(sender, e);
                 return;
             }
@@ -162,12 +163,16 @@ namespace netUtils
             dhcpParameters.serverPort = int.Parse(serverPortDHCPtextbox.Text);
             dhcpParameters.clientPort = int.Parse(clientPortDHCPtextbox.Text);
 
-            dhcpServer(dhcpParameters);
+            await Task.Run(() =>
+            {
+                dhcpServer(dhcpParameters, misc.dhcpCancelToken.Token);
+            });
+            
+            this.Refresh();
         }
 
-        private void dhcpServer(misc.dhcpOptions parameters)
+        private async Task dhcpServer(misc.dhcpOptions parameters, CancellationToken cancelToken)
         {
-            this.Refresh();
             int listenPort = parameters.serverPort;
 
             UdpClient listener = new UdpClient(listenPort);
@@ -177,19 +182,28 @@ namespace netUtils
             {
                 while (true)
                 {
-                    DHCPoutput.Text += $"Waiting for broadcast...\r\n";
+                    if (cancelToken.IsCancellationRequested)
+                    {
+                        misc.dhcpLog("Closing socket");
+                        listener.Close();
+                        listener.Dispose();
+                        break;
+                    }
+
+                    misc.dhcpLog($"Waiting for broadcast...");
                     byte[] bytes = listener.Receive(ref groupEP);
-                    DHCPoutput.Text += $"Received broadcast from {groupEP} : {Encoding.ASCII.GetString(bytes, 0, bytes.Length)}\r\n";
+                    misc.dhcpLog($"Received broadcast from {groupEP}");
                 }
             }
             catch (SocketException e)
             {
-                DHCPoutput.Text += $"Socket Exception: {e}\r\n";
+                misc.dhcpLog($"Socket Exception: {e}");
             }
             finally
             {
-                DHCPoutput.Text += $"Closing socket\r\n";
+                misc.dhcpLog($"Closing socket");
                 listener.Close();
+                listener.Dispose();
             }
         }
 
@@ -197,7 +211,8 @@ namespace netUtils
         {
             stopServerDHCPbutton.Enabled = false;
             startServerDHCPbutton.Enabled = true;
-            DHCPoutput.Text += "Stopping DHCP server...\r\n";
+            misc.dhcpLog("Stopping DHCP server...");
+            misc.dhcpCancelToken.Cancel();
         }
 
         private void serverPortDHCPtextbox_KeyPress(object sender, KeyPressEventArgs e)
@@ -214,6 +229,20 @@ namespace netUtils
             {
                 e.Handled = true;
             }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (String.Compare(DHCPoutput.Text, misc.dhcpOutputText, CultureInfo.CurrentCulture, CompareOptions.IgnoreCase | CompareOptions.IgnoreSymbols) != 0)
+            {
+                DHCPoutput.Text = misc.dhcpOutputText;
+            }
+        }
+
+        private void DHCPoutput_TextChanged(object sender, EventArgs e)
+        {
+            DHCPoutput.SelectionStart = DHCPoutput.Text.Length;
+            DHCPoutput.ScrollToCaret();
         }
     }
 }
