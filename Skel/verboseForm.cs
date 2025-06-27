@@ -22,7 +22,7 @@ namespace netUtils
 
         private void verboseForm_Load(object sender, EventArgs e)
         {
-
+            this.SendToBack();
         }
 
         private void timer1_Tick(object sender, EventArgs e)

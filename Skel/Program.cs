@@ -20,6 +20,14 @@ namespace netUtils
 {
     public class misc
     {
+        public struct dhcpOptions
+        {
+            public string poolStart;
+            public string poolEnd;
+            public int serverPort;
+            public int clientPort;
+        }
+
         public static void printPayload(List<byte> input)
         {
             string output = "";
@@ -49,7 +57,44 @@ namespace netUtils
 
         public static bool dnsServerRunning = false;
         public static List<byte> icmpPacket = new List<byte>();
-        
+
+        public static UInt32 ip2Int(string input)
+        {
+            UInt32 output = 0;
+            string pattern = @"(\d{0,3})\.(\d{0,3})\.(\d{0,3})\.(\d{0,3})";
+
+            if (Regex.IsMatch(input, pattern))
+            {
+                Match match = Regex.Match(input, pattern);
+                if (match.Groups.Count == 5)
+                {
+                    for (int i = 1; i < 5; i++)
+                    {
+                        if (int.Parse(match.Groups[i].Value) < 0 || int.Parse(match.Groups[i].Value) > 255)
+                        {
+                            verbose.write($"Octet {i} [{int.Parse(match.Groups[i].Value)}] out of range. [0-255]");
+                            return 0;
+                        } else
+                        {
+                            output <<= 8;
+                            output += UInt32.Parse(match.Groups[i].Value);
+                        }
+                    }
+                    return output;
+                }
+                else
+                {
+                    verbose.write("IP address format incorrect.");
+                    return 0;
+                }
+            }
+            else
+            {
+                verbose.write("Invalid IP address.");
+                return 0;
+            }
+        }
+
         public static bool validateIP(string input)
         {
             string pattern = @"(\d{0,3})\.(\d{0,3})\.(\d{0,3})\.(\d{0,3})";
@@ -63,19 +108,19 @@ namespace netUtils
                     {
                         if (int.Parse(match.Groups[i].Value) < 0 || int.Parse(match.Groups[i].Value) > 255)
                         {
-                            MessageBox.Show($"Octet {i} [{int.Parse(match.Groups[i].Value)}] out of range. [0-255]", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            verbose.write($"Octet {i} [{int.Parse(match.Groups[i].Value)}] out of range. [0-255]");
                             return false;
                         }
                     }
                     return true;
                 } else
                 {
-                    MessageBox.Show("IP address format incorrect.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    verbose.write("IP address format incorrect.");
                     return false;
                 }
             } else
             {
-                MessageBox.Show("Invalid IP address.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                verbose.write("Invalid IP address.");
                 return false;
             }
         }
