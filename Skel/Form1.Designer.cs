@@ -32,22 +32,22 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.clientPortDHCPtextbox = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.serverPortDHCPtextbox = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.poolStopDHCPtextbox = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.poolStartDHCPtextbox = new System.Windows.Forms.TextBox();
             this.stopServerDHCPbutton = new System.Windows.Forms.Button();
             this.startServerDHCPbutton = new System.Windows.Forms.Button();
-            this.DHCPoutput = new System.Windows.Forms.RichTextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.closeButton = new System.Windows.Forms.Button();
             this.minimizeButton = new System.Windows.Forms.Button();
             this.maximizeButton = new System.Windows.Forms.Button();
-            this.poolStartDHCPtextbox = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.poolStopDHCPtextbox = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.serverPortDHCPtextbox = new System.Windows.Forms.TextBox();
-            this.clientPortDHCPtextbox = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.DHCPoutput = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.SuspendLayout();
@@ -70,6 +70,7 @@
             // tabPage1
             // 
             this.tabPage1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tabPage1.Controls.Add(this.DHCPoutput);
             this.tabPage1.Controls.Add(this.clientPortDHCPtextbox);
             this.tabPage1.Controls.Add(this.label4);
             this.tabPage1.Controls.Add(this.serverPortDHCPtextbox);
@@ -80,7 +81,6 @@
             this.tabPage1.Controls.Add(this.poolStartDHCPtextbox);
             this.tabPage1.Controls.Add(this.stopServerDHCPbutton);
             this.tabPage1.Controls.Add(this.startServerDHCPbutton);
-            this.tabPage1.Controls.Add(this.DHCPoutput);
             this.tabPage1.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabPage1.Location = new System.Drawing.Point(4, 27);
             this.tabPage1.Name = "tabPage1";
@@ -91,6 +91,84 @@
             this.tabPage1.UseVisualStyleBackColor = true;
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             this.tabPage1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tabPage1_MouseDown);
+            // 
+            // clientPortDHCPtextbox
+            // 
+            this.clientPortDHCPtextbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.clientPortDHCPtextbox.Location = new System.Drawing.Point(9, 180);
+            this.clientPortDHCPtextbox.Name = "clientPortDHCPtextbox";
+            this.clientPortDHCPtextbox.Size = new System.Drawing.Size(76, 20);
+            this.clientPortDHCPtextbox.TabIndex = 10;
+            this.clientPortDHCPtextbox.Text = "68";
+            this.clientPortDHCPtextbox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.serverPortDHCPtextbox_KeyPress);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(6, 162);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(79, 15);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "Client Port:";
+            // 
+            // serverPortDHCPtextbox
+            // 
+            this.serverPortDHCPtextbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.serverPortDHCPtextbox.Location = new System.Drawing.Point(9, 130);
+            this.serverPortDHCPtextbox.Name = "serverPortDHCPtextbox";
+            this.serverPortDHCPtextbox.Size = new System.Drawing.Size(76, 20);
+            this.serverPortDHCPtextbox.TabIndex = 8;
+            this.serverPortDHCPtextbox.Text = "67";
+            this.serverPortDHCPtextbox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.serverPortDHCPtextbox_KeyPress);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(6, 112);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(79, 15);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Server Port:";
+            // 
+            // poolStopDHCPtextbox
+            // 
+            this.poolStopDHCPtextbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.poolStopDHCPtextbox.Location = new System.Drawing.Point(9, 80);
+            this.poolStopDHCPtextbox.Name = "poolStopDHCPtextbox";
+            this.poolStopDHCPtextbox.Size = new System.Drawing.Size(115, 20);
+            this.poolStopDHCPtextbox.TabIndex = 6;
+            this.poolStopDHCPtextbox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.poolStartDHCPtextbox_KeyPress);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(6, 62);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(67, 15);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Pool Stop:";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(6, 12);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(73, 15);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Pool Start:";
+            // 
+            // poolStartDHCPtextbox
+            // 
+            this.poolStartDHCPtextbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.poolStartDHCPtextbox.Location = new System.Drawing.Point(9, 30);
+            this.poolStartDHCPtextbox.Name = "poolStartDHCPtextbox";
+            this.poolStartDHCPtextbox.Size = new System.Drawing.Size(115, 20);
+            this.poolStartDHCPtextbox.TabIndex = 3;
+            this.poolStartDHCPtextbox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.poolStartDHCPtextbox_KeyPress);
             // 
             // stopServerDHCPbutton
             // 
@@ -117,25 +195,13 @@
             this.startServerDHCPbutton.UseVisualStyleBackColor = true;
             this.startServerDHCPbutton.Click += new System.EventHandler(this.startServerDHCPbutton_Click);
             // 
-            // DHCPoutput
-            // 
-            this.DHCPoutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.DHCPoutput.Font = new System.Drawing.Font("Cascadia Mono", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DHCPoutput.Location = new System.Drawing.Point(-1, 289);
-            this.DHCPoutput.Name = "DHCPoutput";
-            this.DHCPoutput.ReadOnly = true;
-            this.DHCPoutput.Size = new System.Drawing.Size(658, 169);
-            this.DHCPoutput.TabIndex = 0;
-            this.DHCPoutput.Text = "";
-            this.DHCPoutput.TextChanged += new System.EventHandler(this.DHCPoutput_TextChanged);
-            // 
             // tabPage2
             // 
             this.tabPage2.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Location = new System.Drawing.Point(4, 27);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(658, 461);
+            this.tabPage2.Size = new System.Drawing.Size(658, 459);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -180,88 +246,22 @@
             this.maximizeButton.UseVisualStyleBackColor = true;
             this.maximizeButton.Click += new System.EventHandler(this.maximizeButton_Click);
             // 
-            // poolStartDHCPtextbox
-            // 
-            this.poolStartDHCPtextbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.poolStartDHCPtextbox.Location = new System.Drawing.Point(9, 30);
-            this.poolStartDHCPtextbox.Name = "poolStartDHCPtextbox";
-            this.poolStartDHCPtextbox.Size = new System.Drawing.Size(115, 20);
-            this.poolStartDHCPtextbox.TabIndex = 3;
-            this.poolStartDHCPtextbox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.poolStartDHCPtextbox_KeyPress);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(6, 12);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(73, 15);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Pool Start:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(6, 62);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(67, 15);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Pool Stop:";
-            // 
-            // poolStopDHCPtextbox
-            // 
-            this.poolStopDHCPtextbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.poolStopDHCPtextbox.Location = new System.Drawing.Point(9, 80);
-            this.poolStopDHCPtextbox.Name = "poolStopDHCPtextbox";
-            this.poolStopDHCPtextbox.Size = new System.Drawing.Size(115, 20);
-            this.poolStopDHCPtextbox.TabIndex = 6;
-            this.poolStopDHCPtextbox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.poolStartDHCPtextbox_KeyPress);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(6, 112);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(79, 15);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "Server Port:";
-            // 
-            // serverPortDHCPtextbox
-            // 
-            this.serverPortDHCPtextbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.serverPortDHCPtextbox.Location = new System.Drawing.Point(9, 130);
-            this.serverPortDHCPtextbox.Name = "serverPortDHCPtextbox";
-            this.serverPortDHCPtextbox.Size = new System.Drawing.Size(76, 20);
-            this.serverPortDHCPtextbox.TabIndex = 8;
-            this.serverPortDHCPtextbox.Text = "67";
-            this.serverPortDHCPtextbox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.serverPortDHCPtextbox_KeyPress);
-            // 
-            // clientPortDHCPtextbox
-            // 
-            this.clientPortDHCPtextbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.clientPortDHCPtextbox.Location = new System.Drawing.Point(9, 180);
-            this.clientPortDHCPtextbox.Name = "clientPortDHCPtextbox";
-            this.clientPortDHCPtextbox.Size = new System.Drawing.Size(76, 20);
-            this.clientPortDHCPtextbox.TabIndex = 10;
-            this.clientPortDHCPtextbox.Text = "68";
-            this.clientPortDHCPtextbox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.serverPortDHCPtextbox_KeyPress);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(6, 162);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(79, 15);
-            this.label4.TabIndex = 9;
-            this.label4.Text = "Client Port:";
-            // 
             // timer1
             // 
             this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // DHCPoutput
+            // 
+            this.DHCPoutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.DHCPoutput.Location = new System.Drawing.Point(-1, 206);
+            this.DHCPoutput.Multiline = true;
+            this.DHCPoutput.Name = "DHCPoutput";
+            this.DHCPoutput.ReadOnly = true;
+            this.DHCPoutput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.DHCPoutput.Size = new System.Drawing.Size(658, 252);
+            this.DHCPoutput.TabIndex = 11;
             // 
             // Form1
             // 
@@ -292,7 +292,6 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.RichTextBox DHCPoutput;
         private System.Windows.Forms.Button startServerDHCPbutton;
         private System.Windows.Forms.Button maximizeButton;
         private System.Windows.Forms.Button minimizeButton;
@@ -307,6 +306,7 @@
         private System.Windows.Forms.TextBox clientPortDHCPtextbox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.TextBox DHCPoutput;
     }
 }
 

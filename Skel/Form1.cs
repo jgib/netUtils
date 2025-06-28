@@ -163,10 +163,10 @@ namespace netUtils
             dhcpParameters.serverPort = int.Parse(serverPortDHCPtextbox.Text);
             dhcpParameters.clientPort = int.Parse(clientPortDHCPtextbox.Text);
 
-            await Task.Run(() =>
-            {
+            //await Task.Run(() =>
+            //{
                 dhcpServer(dhcpParameters, misc.dhcpCancelToken.Token);
-            });
+            //});
             
             this.Refresh();
         }
@@ -180,20 +180,114 @@ namespace netUtils
 
             try
             {
-                while (true)
+                await Task.Run(() =>
                 {
-                    if (cancelToken.IsCancellationRequested)
+                    while (!cancelToken.IsCancellationRequested || true)
                     {
-                        misc.dhcpLog("Closing socket");
-                        listener.Close();
-                        listener.Dispose();
-                        break;
-                    }
+                        /*
+                        if (cancelToken.IsCancellationRequested)
+                        {
+                            misc.dhcpLog("Closing socket");
+                            listener.Close();
+                            listener.Dispose();
+                            break;
+                        }
+                        */
 
-                    misc.dhcpLog($"Waiting for broadcast...");
-                    byte[] bytes = listener.Receive(ref groupEP);
-                    misc.dhcpLog($"Received broadcast from {groupEP}");
-                }
+                        misc.dhcpLog($"Waiting for broadcast...");
+                        byte[] bytes = listener.Receive(ref groupEP);
+                        misc.dhcpLog($"Received broadcast from {groupEP} [{bytes.Length} bytes]\r\n{misc.printPayload(bytes.ToList<byte>())}");
+                        misc.dhcpDatagram datagram = new misc.dhcpDatagram();
+                        datagram.chaddr = new byte[16];
+                        datagram.sname = new byte[64];
+                        datagram.file = new byte[128];
+                        datagram.options = Array.Empty<byte>();
+
+                        if (bytes.Length > 235)
+                        {
+                            datagram.op = bytes[0];
+                            datagram.htype = bytes[1];
+                            datagram.hlen = bytes[2];
+                            datagram.hops = bytes[3];
+                            for (int i = 0; i < 4; i++)
+                            {
+                                datagram.xid <<= 8;
+                                datagram.xid += bytes[4 + i];
+                            }
+                            datagram.secs = bytes[8];
+                            datagram.secs <<= 8;
+                            datagram.secs += bytes[9];
+                            datagram.flags = bytes[10];
+                            datagram.flags <<= 8;
+                            datagram.flags += bytes[11];
+                            for (int i = 0; i < 4; i++)
+                            {
+                                datagram.ciaddr <<= 8;
+                                datagram.ciaddr += bytes[12 + i];
+                            }
+                            for (int i = 0; i < 4; i++)
+                            {
+                                datagram.yiaddr <<= 8;
+                                datagram.yiaddr += bytes[16 + i];
+                            }
+                            for (int i = 0; i < 4; i++)
+                            {
+                                datagram.siaddr <<= 8;
+                                datagram.siaddr += bytes[20 + i];
+                            }
+                            for (int i = 0; i < 4; i++)
+                            {
+                                datagram.giaddr <<= 8;
+                                datagram.giaddr += bytes[24 + i];
+                            }
+                            for (int i = 0; i < 16; i++)
+                            {
+                                datagram.chaddr[i] = bytes[28 + i];
+                            }
+                            for (int i = 0; i < 64; i++)
+                            {
+                                datagram.sname[i] = bytes[44 + i];
+                            }
+                            for (int i = 0; i < 128; i++)
+                            {
+                                datagram.file[i] = bytes[108 + i];
+                            }
+                            
+                            //datagram.options = new ArraySegment<byte>(bytes, 236, bytes.Length).ToArray<byte>();
+                            /*
+                            for (int i = 236; i < bytes.Length; i++)
+                            {
+                                datagram.options[236 - i] = bytes[i];
+                            }
+                            */
+
+                            misc.dhcpLog($"OP CODE: {datagram.op}  ;  [ 1 = BOOTREQUEST, 2 = BOOTREPLY ]");
+                            misc.dhcpLog($"HW ADDR TYPE: {datagram.htype}  ;  [ 1 = 10mb ethernet, see 'Assigned Numbers' RFC ]");
+                            misc.dhcpLog($"HW ADDR LEN:  {datagram.hlen}   ;  [ 6 for 10mb ethernet ]");
+                            misc.dhcpLog($"HOPS: {datagram.hops}");
+                            misc.dhcpLog($"XID: {datagram.xid}");
+                            misc.dhcpLog($"SECONDS: {datagram.secs}");
+                            misc.dhcpLog($"FLAGS: {datagram.flags}"); // breakout individual flags here
+                            misc.dhcpLog($"CLIENT IP: {(byte)(datagram.ciaddr >> 24)}.{(byte)(datagram.ciaddr >> 16)}.{(byte)(datagram.ciaddr >> 8)}.{(byte)(datagram.ciaddr)}");
+                            misc.dhcpLog($"YOUR IP: {(byte)(datagram.yiaddr >> 24)}.{(byte)(datagram.yiaddr >> 16)}.{(byte)(datagram.yiaddr >> 8)}.{(byte)(datagram.yiaddr)}");
+                            misc.dhcpLog($"SERVER IP: {(byte)(datagram.siaddr >> 24)}.{(byte)(datagram.siaddr >> 16)}.{(byte)(datagram.siaddr) >> 8}.{(byte)(datagram.siaddr)}");
+                            misc.dhcpLog($"RELAY IP: {(byte)(datagram.giaddr >> 24)}.{(byte)(datagram.giaddr >> 16)}.{(byte)(datagram.giaddr >> 8)}.{(byte)(datagram.giaddr)}");
+                            string hwAddr = "";
+                            for (int i = 0; i < datagram.chaddr.Length; i++)
+                            {
+                                if (i % 2 == 0 && i != 0)
+                                {
+                                    hwAddr += ":";
+                                }
+                                hwAddr += datagram.chaddr[i].ToString("X2");
+                            }
+                            misc.dhcpLog($"HW ADDR: {hwAddr}");
+                            misc.dhcpLog($"SERVER NAME: {System.Text.Encoding.Default.GetString(datagram.sname)}");
+                            // break out individual options
+
+                        }
+                    }
+                });
             }
             catch (SocketException e)
             {
@@ -231,18 +325,17 @@ namespace netUtils
             }
         }
 
+        int dhcpOutputCount = 0;
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (String.Compare(DHCPoutput.Text, misc.dhcpOutputText, CultureInfo.CurrentCulture, CompareOptions.IgnoreCase | CompareOptions.IgnoreSymbols) != 0)
+            if (dhcpOutputCount != misc.dhcpOutputText.Length)
             {
-                DHCPoutput.Text = misc.dhcpOutputText;
-            }
-        }
+                DHCPoutput.Clear();
+                DHCPoutput.AppendText(misc.dhcpOutputText);
+                dhcpOutputCount = misc.dhcpOutputText.Length;
 
-        private void DHCPoutput_TextChanged(object sender, EventArgs e)
-        {
-            DHCPoutput.SelectionStart = DHCPoutput.Text.Length;
-            DHCPoutput.ScrollToCaret();
+                verbose.write($"Updating DHCP output text");
+            }
         }
     }
 }

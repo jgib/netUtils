@@ -30,18 +30,37 @@ namespace netUtils
             public int clientPort;
         }
 
+        public struct dhcpDatagram
+        {
+            public byte   op;
+            public byte   htype;
+            public byte   hlen;
+            public byte   hops;
+            public UInt32 xid;
+            public UInt16 secs;
+            public UInt16 flags;
+            public UInt32 ciaddr;
+            public UInt32 yiaddr;
+            public UInt32 siaddr;
+            public UInt32 giaddr;
+            public byte[] chaddr;  // 16 bytes
+            public byte[] sname;   // 64 bytes
+            public byte[] file;    // 128 bytes
+            public byte[] options; // variable length
+        }
+
         public static void dhcpLog(string input)
         {
             dhcpOutputText += $"{input}\r\n";
         }
 
-        public static void printPayload(List<byte> input)
+        public static string printPayload(List<byte> input)
         {
             string output = "";
 
             if (input.Count == 0)
             {
-                return;
+                return null;
             }
 
             for (int n = 0; n < input.Count; n++)
@@ -53,13 +72,14 @@ namespace netUtils
 
                 output += input[n].ToString("X2");
 
-                if ((n+1) % 4 == 0)
+                //if ((n+1) % 4 == 0)
+                if ((n+1) % 16 == 0)
                 {
                     output += "\r\n";
                 }
             }
             verbose.write($"PAYLOAD:\r\n{output}");
-            return;
+            return output;
         }
 
         public static bool dnsServerRunning = false;
