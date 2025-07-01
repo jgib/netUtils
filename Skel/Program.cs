@@ -22,6 +22,7 @@ namespace netUtils
     {
         public static string dhcpOutputText = "";
         public static CancellationTokenSource dhcpCancelToken = new CancellationTokenSource();
+        public static bool newTextDHCP = false;
         public struct dhcpOptions
         {
             public string poolStart;
@@ -52,6 +53,7 @@ namespace netUtils
         public static void dhcpLog(string input)
         {
             dhcpOutputText += $"{input}\r\n";
+            newTextDHCP = true;
         }
 
         public static string printPayload(List<byte> input)

@@ -110,6 +110,10 @@ namespace netUtils
         {
             startServerDHCPbutton.Enabled = false;
             stopServerDHCPbutton.Enabled = true;
+            poolStartDHCPtextbox.ReadOnly = true;
+            poolStopDHCPtextbox.ReadOnly = true;
+            serverPortDHCPtextbox.ReadOnly = true;
+            clientPortDHCPtextbox.ReadOnly = true;
             misc.dhcpLog("Staring DHCP Server...");
             
             if (!misc.validateIP(poolStartDHCPtextbox.Text))
@@ -165,7 +169,7 @@ namespace netUtils
 
             //await Task.Run(() =>
             //{
-                dhcpServer(dhcpParameters, misc.dhcpCancelToken.Token);
+                await dhcpServer(dhcpParameters, misc.dhcpCancelToken.Token);
             //});
             
             this.Refresh();
@@ -182,6 +186,7 @@ namespace netUtils
             {
                 await Task.Run(() =>
                 {
+                    int connCount = 0;
                     while (!cancelToken.IsCancellationRequested || true)
                     {
                         /*
@@ -196,7 +201,8 @@ namespace netUtils
 
                         misc.dhcpLog($"Waiting for broadcast...");
                         byte[] bytes = listener.Receive(ref groupEP);
-                        misc.dhcpLog($"Received broadcast from {groupEP} [{bytes.Length} bytes]\r\n{misc.printPayload(bytes.ToList<byte>())}");
+                        connCount++;
+                        misc.dhcpLog($"CONN[{connCount}] Received broadcast from {groupEP} [{bytes.Length} bytes]\r\n{misc.printPayload(bytes.ToList<byte>())}");
                         misc.dhcpDatagram datagram = new misc.dhcpDatagram();
                         datagram.chaddr = new byte[16];
                         datagram.sname = new byte[64];
@@ -260,18 +266,17 @@ namespace netUtils
                                 datagram.options[236 - i] = bytes[i];
                             }
                             */
-
-                            misc.dhcpLog($"OP CODE: {datagram.op}  ;  [ 1 = BOOTREQUEST, 2 = BOOTREPLY ]");
-                            misc.dhcpLog($"HW ADDR TYPE: {datagram.htype}  ;  [ 1 = 10mb ethernet, see 'Assigned Numbers' RFC ]");
-                            misc.dhcpLog($"HW ADDR LEN:  {datagram.hlen}   ;  [ 6 for 10mb ethernet ]");
-                            misc.dhcpLog($"HOPS: {datagram.hops}");
-                            misc.dhcpLog($"XID: {datagram.xid}");
-                            misc.dhcpLog($"SECONDS: {datagram.secs}");
-                            misc.dhcpLog($"FLAGS: {datagram.flags}"); // breakout individual flags here
-                            misc.dhcpLog($"CLIENT IP: {(byte)(datagram.ciaddr >> 24)}.{(byte)(datagram.ciaddr >> 16)}.{(byte)(datagram.ciaddr >> 8)}.{(byte)(datagram.ciaddr)}");
-                            misc.dhcpLog($"YOUR IP: {(byte)(datagram.yiaddr >> 24)}.{(byte)(datagram.yiaddr >> 16)}.{(byte)(datagram.yiaddr >> 8)}.{(byte)(datagram.yiaddr)}");
-                            misc.dhcpLog($"SERVER IP: {(byte)(datagram.siaddr >> 24)}.{(byte)(datagram.siaddr >> 16)}.{(byte)(datagram.siaddr) >> 8}.{(byte)(datagram.siaddr)}");
-                            misc.dhcpLog($"RELAY IP: {(byte)(datagram.giaddr >> 24)}.{(byte)(datagram.giaddr >> 16)}.{(byte)(datagram.giaddr >> 8)}.{(byte)(datagram.giaddr)}");
+                            misc.dhcpLog($"CONN[{connCount}] OP CODE: {datagram.op}  ;  [ 1 = BOOTREQUEST, 2 = BOOTREPLY ]");
+                            misc.dhcpLog($"CONN[{connCount}] HW ADDR TYPE: {datagram.htype}  ;  [ 1 = 10mb ethernet, see 'Assigned Numbers' RFC ]");
+                            misc.dhcpLog($"CONN[{connCount}] HW ADDR LEN:  {datagram.hlen}   ;  [ 6 for 10mb ethernet ]");
+                            misc.dhcpLog($"CONN[{connCount}] HOPS: {datagram.hops}");
+                            misc.dhcpLog($"CONN[{connCount}] XID: {datagram.xid}");
+                            misc.dhcpLog($"CONN[{connCount}] SECONDS: {datagram.secs}");
+                            misc.dhcpLog($"CONN[{connCount}] FLAGS: {datagram.flags}"); // breakout individual flags here
+                            misc.dhcpLog($"CONN[{connCount}] CLIENT IP: {(byte)(datagram.ciaddr >> 24)}.{(byte)(datagram.ciaddr >> 16)}.{(byte)(datagram.ciaddr >> 8)}.{(byte)(datagram.ciaddr)}");
+                            misc.dhcpLog($"CONN[{connCount}] YOUR IP: {(byte)(datagram.yiaddr >> 24)}.{(byte)(datagram.yiaddr >> 16)}.{(byte)(datagram.yiaddr >> 8)}.{(byte)(datagram.yiaddr)}");
+                            misc.dhcpLog($"CONN[{connCount}] SERVER IP: {(byte)(datagram.siaddr >> 24)}.{(byte)(datagram.siaddr >> 16)}.{(byte)(datagram.siaddr) >> 8}.{(byte)(datagram.siaddr)}");
+                            misc.dhcpLog($"CONN[{connCount}] RELAY IP: {(byte)(datagram.giaddr >> 24)}.{(byte)(datagram.giaddr >> 16)}.{(byte)(datagram.giaddr >> 8)}.{(byte)(datagram.giaddr)}");
                             string hwAddr = "";
                             for (int i = 0; i < datagram.chaddr.Length; i++)
                             {
@@ -281,11 +286,15 @@ namespace netUtils
                                 }
                                 hwAddr += datagram.chaddr[i].ToString("X2");
                             }
-                            misc.dhcpLog($"HW ADDR: {hwAddr}");
-                            misc.dhcpLog($"SERVER NAME: {System.Text.Encoding.Default.GetString(datagram.sname)}");
+                            misc.dhcpLog($"CONN[{connCount}] HW ADDR: {hwAddr}");
+                            misc.dhcpLog($"CONN[{connCount}] SERVER NAME: {System.Text.Encoding.Default.GetString(datagram.sname)}");
                             // break out individual options
 
+                            // do stuff
+                            bytes = Array.Empty<byte>();
+                            continue;
                         }
+
                     }
                 });
             }
@@ -297,7 +306,7 @@ namespace netUtils
             {
                 misc.dhcpLog($"Closing socket");
                 listener.Close();
-                listener.Dispose();
+                //listener.Dispose();
             }
         }
 
@@ -305,6 +314,10 @@ namespace netUtils
         {
             stopServerDHCPbutton.Enabled = false;
             startServerDHCPbutton.Enabled = true;
+            poolStartDHCPtextbox.ReadOnly = false;
+            poolStopDHCPtextbox.ReadOnly = false;
+            serverPortDHCPtextbox.ReadOnly = false;
+            clientPortDHCPtextbox.ReadOnly = false;
             misc.dhcpLog("Stopping DHCP server...");
             misc.dhcpCancelToken.Cancel();
         }
@@ -328,14 +341,23 @@ namespace netUtils
         int dhcpOutputCount = 0;
         private void timer1_Tick(object sender, EventArgs e)
         {
+            if (misc.newTextDHCP)
+            {
+                DHCPoutput.Text = misc.dhcpOutputText;
+                misc.newTextDHCP = false;
+            }
+            /*
             if (dhcpOutputCount != misc.dhcpOutputText.Length)
             {
                 DHCPoutput.Clear();
+                //DHCPoutput.Text = "";
                 DHCPoutput.AppendText(misc.dhcpOutputText);
                 dhcpOutputCount = misc.dhcpOutputText.Length;
 
                 verbose.write($"Updating DHCP output text");
+                this.Refresh();
             }
+            */
         }
     }
 }
