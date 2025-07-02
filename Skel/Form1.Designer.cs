@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.DHCPoutput = new System.Windows.Forms.TextBox();
             this.clientPortDHCPtextbox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.serverPortDHCPtextbox = new System.Windows.Forms.TextBox();
@@ -46,8 +46,6 @@
             this.closeButton = new System.Windows.Forms.Button();
             this.minimizeButton = new System.Windows.Forms.Button();
             this.maximizeButton = new System.Windows.Forms.Button();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.DHCPoutput = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.SuspendLayout();
@@ -91,6 +89,18 @@
             this.tabPage1.UseVisualStyleBackColor = true;
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             this.tabPage1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tabPage1_MouseDown);
+            // 
+            // DHCPoutput
+            // 
+            this.DHCPoutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.DHCPoutput.Location = new System.Drawing.Point(-1, 206);
+            this.DHCPoutput.Multiline = true;
+            this.DHCPoutput.Name = "DHCPoutput";
+            this.DHCPoutput.ReadOnly = true;
+            this.DHCPoutput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.DHCPoutput.Size = new System.Drawing.Size(658, 252);
+            this.DHCPoutput.TabIndex = 11;
             // 
             // clientPortDHCPtextbox
             // 
@@ -246,23 +256,6 @@
             this.maximizeButton.UseVisualStyleBackColor = true;
             this.maximizeButton.Click += new System.EventHandler(this.maximizeButton_Click);
             // 
-            // timer1
-            // 
-            this.timer1.Enabled = true;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // DHCPoutput
-            // 
-            this.DHCPoutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.DHCPoutput.Location = new System.Drawing.Point(-1, 206);
-            this.DHCPoutput.Multiline = true;
-            this.DHCPoutput.Name = "DHCPoutput";
-            this.DHCPoutput.ReadOnly = true;
-            this.DHCPoutput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.DHCPoutput.Size = new System.Drawing.Size(658, 252);
-            this.DHCPoutput.TabIndex = 11;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -305,7 +298,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox clientPortDHCPtextbox;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.TextBox DHCPoutput;
     }
 }

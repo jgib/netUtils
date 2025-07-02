@@ -20,9 +20,7 @@ namespace netUtils
 {
     public class misc
     {
-        public static string dhcpOutputText = "";
         public static CancellationTokenSource dhcpCancelToken = new CancellationTokenSource();
-        public static bool newTextDHCP = false;
         public struct dhcpOptions
         {
             public string poolStart;
@@ -50,12 +48,6 @@ namespace netUtils
             public byte[] options; // variable length
         }
 
-        public static void dhcpLog(string input)
-        {
-            dhcpOutputText += $"{input}\r\n";
-            newTextDHCP = true;
-        }
-
         public static string printPayload(List<byte> input)
         {
             string output = "";
@@ -67,7 +59,7 @@ namespace netUtils
 
             for (int n = 0; n < input.Count; n++)
             {
-                if (n % 1 == 0)
+                if (n % 2 == 0)
                 {
                     output += "    ";
                 }
@@ -75,7 +67,7 @@ namespace netUtils
                 output += input[n].ToString("X2");
 
                 //if ((n+1) % 4 == 0)
-                if ((n+1) % 16 == 0)
+                if ((n+1) % 24 == 0)
                 {
                     output += "\r\n";
                 }

@@ -114,17 +114,17 @@ namespace netUtils
             poolStopDHCPtextbox.ReadOnly = true;
             serverPortDHCPtextbox.ReadOnly = true;
             clientPortDHCPtextbox.ReadOnly = true;
-            misc.dhcpLog("Staring DHCP Server...");
+            dhcpWrite("Staring DHCP Server...");
             
             if (!misc.validateIP(poolStartDHCPtextbox.Text))
             {
-                misc.dhcpLog($"Invalid pool start IP address [{poolStartDHCPtextbox.Text}]");
+                dhcpWrite($"Invalid pool start IP address [{poolStartDHCPtextbox.Text}]");
                 stopServerDHCPbutton_Click(sender, e);
                 return;
             }
             if (!misc.validateIP(poolStopDHCPtextbox.Text))
             {
-                misc.dhcpLog($"Invalid pool stop IP address [{poolStopDHCPtextbox.Text}]");
+                dhcpWrite($"Invalid pool stop IP address [{poolStopDHCPtextbox.Text}]");
                 stopServerDHCPbutton_Click(sender , e);
                 return;
             }
@@ -135,7 +135,7 @@ namespace netUtils
 
             if (ip1 > ip2)
             {
-                misc.dhcpLog($"Begining of DHCP pool is larger than end of pool [{poolStartDHCPtextbox.Text} - {poolStopDHCPtextbox.Text}]");
+                dhcpWrite($"Begining of DHCP pool is larger than end of pool [{poolStartDHCPtextbox.Text} - {poolStopDHCPtextbox.Text}]");
                 stopServerDHCPbutton_Click(sender, e);
                 return;
             }
@@ -146,7 +146,7 @@ namespace netUtils
                 UInt16 dhcpServerPort = UInt16.Parse(serverPortDHCPtextbox.Text);
             } catch (OverflowException ex)
             {
-                misc.dhcpLog($"Invalid server port number [{serverPortDHCPtextbox.Text}]\r\nMust be valid 16-bit unsigned integer, i.e. 0 - 65535");
+                dhcpWrite($"Invalid server port number [{serverPortDHCPtextbox.Text}]\r\nMust be valid 16-bit unsigned integer, i.e. 0 - 65535");
                 stopServerDHCPbutton_Click(sender, e);
                 return;
             }
@@ -156,7 +156,7 @@ namespace netUtils
             }
             catch (OverflowException ex)
             {
-                misc.dhcpLog($"Invalid client port number [{clientPortDHCPtextbox.Text}]\r\nMust be valid 16-bit unsigned integer, i.e. 0 - 65535");
+                dhcpWrite($"Invalid client port number [{clientPortDHCPtextbox.Text}]\r\nMust be valid 16-bit unsigned integer, i.e. 0 - 65535");
                 stopServerDHCPbutton_Click(sender, e);
                 return;
             }
@@ -199,10 +199,11 @@ namespace netUtils
                         }
                         */
 
-                        misc.dhcpLog($"Waiting for broadcast...");
+                        //misc.dhcpLog($"Waiting for broadcast...");
+                        dhcpWrite($"Waiting for broadcast...");
                         byte[] bytes = listener.Receive(ref groupEP);
                         connCount++;
-                        misc.dhcpLog($"CONN[{connCount}] Received broadcast from {groupEP} [{bytes.Length} bytes]\r\n{misc.printPayload(bytes.ToList<byte>())}");
+                        dhcpWrite($"CONN[{connCount}] Received broadcast from {groupEP} [{bytes.Length} bytes]\r\n{misc.printPayload(bytes.ToList<byte>())}");
                         misc.dhcpDatagram datagram = new misc.dhcpDatagram();
                         datagram.chaddr = new byte[16];
                         datagram.sname = new byte[64];
@@ -258,7 +259,7 @@ namespace netUtils
                             {
                                 datagram.file[i] = bytes[108 + i];
                             }
-                            
+
                             //datagram.options = new ArraySegment<byte>(bytes, 236, bytes.Length).ToArray<byte>();
                             /*
                             for (int i = 236; i < bytes.Length; i++)
@@ -266,17 +267,17 @@ namespace netUtils
                                 datagram.options[236 - i] = bytes[i];
                             }
                             */
-                            misc.dhcpLog($"CONN[{connCount}] OP CODE: {datagram.op}  ;  [ 1 = BOOTREQUEST, 2 = BOOTREPLY ]");
-                            misc.dhcpLog($"CONN[{connCount}] HW ADDR TYPE: {datagram.htype}  ;  [ 1 = 10mb ethernet, see 'Assigned Numbers' RFC ]");
-                            misc.dhcpLog($"CONN[{connCount}] HW ADDR LEN:  {datagram.hlen}   ;  [ 6 for 10mb ethernet ]");
-                            misc.dhcpLog($"CONN[{connCount}] HOPS: {datagram.hops}");
-                            misc.dhcpLog($"CONN[{connCount}] XID: {datagram.xid}");
-                            misc.dhcpLog($"CONN[{connCount}] SECONDS: {datagram.secs}");
-                            misc.dhcpLog($"CONN[{connCount}] FLAGS: {datagram.flags}"); // breakout individual flags here
-                            misc.dhcpLog($"CONN[{connCount}] CLIENT IP: {(byte)(datagram.ciaddr >> 24)}.{(byte)(datagram.ciaddr >> 16)}.{(byte)(datagram.ciaddr >> 8)}.{(byte)(datagram.ciaddr)}");
-                            misc.dhcpLog($"CONN[{connCount}] YOUR IP: {(byte)(datagram.yiaddr >> 24)}.{(byte)(datagram.yiaddr >> 16)}.{(byte)(datagram.yiaddr >> 8)}.{(byte)(datagram.yiaddr)}");
-                            misc.dhcpLog($"CONN[{connCount}] SERVER IP: {(byte)(datagram.siaddr >> 24)}.{(byte)(datagram.siaddr >> 16)}.{(byte)(datagram.siaddr) >> 8}.{(byte)(datagram.siaddr)}");
-                            misc.dhcpLog($"CONN[{connCount}] RELAY IP: {(byte)(datagram.giaddr >> 24)}.{(byte)(datagram.giaddr >> 16)}.{(byte)(datagram.giaddr >> 8)}.{(byte)(datagram.giaddr)}");
+                            dhcpWrite($"CONN[{connCount}] OP CODE: {datagram.op}  ;  [ 1 = BOOTREQUEST, 2 = BOOTREPLY ]");
+                            dhcpWrite($"CONN[{connCount}] HW ADDR TYPE: {datagram.htype}  ;  [ 1 = 10mb ethernet, see 'Assigned Numbers' RFC ]");
+                            dhcpWrite($"CONN[{connCount}] HW ADDR LEN:  {datagram.hlen}   ;  [ 6 for 10mb ethernet ]");
+                            dhcpWrite($"CONN[{connCount}] HOPS: {datagram.hops}");
+                            dhcpWrite($"CONN[{connCount}] XID: {datagram.xid}");
+                            dhcpWrite($"CONN[{connCount}] SECONDS: {datagram.secs}");
+                            dhcpWrite($"CONN[{connCount}] FLAGS: {datagram.flags}"); // breakout individual flags here
+                            dhcpWrite($"CONN[{connCount}] CLIENT IP: {(byte)(datagram.ciaddr >> 24)}.{(byte)(datagram.ciaddr >> 16)}.{(byte)(datagram.ciaddr >> 8)}.{(byte)(datagram.ciaddr)}");
+                            dhcpWrite($"CONN[{connCount}] YOUR IP: {(byte)(datagram.yiaddr >> 24)}.{(byte)(datagram.yiaddr >> 16)}.{(byte)(datagram.yiaddr >> 8)}.{(byte)(datagram.yiaddr)}");
+                            dhcpWrite($"CONN[{connCount}] SERVER IP: {(byte)(datagram.siaddr >> 24)}.{(byte)(datagram.siaddr >> 16)}.{(byte)(datagram.siaddr) >> 8}.{(byte)(datagram.siaddr)}");
+                            dhcpWrite($"CONN[{connCount}] RELAY IP: {(byte)(datagram.giaddr >> 24)}.{(byte)(datagram.giaddr >> 16)}.{(byte)(datagram.giaddr >> 8)}.{(byte)(datagram.giaddr)}");
                             string hwAddr = "";
                             for (int i = 0; i < datagram.chaddr.Length; i++)
                             {
@@ -286,8 +287,8 @@ namespace netUtils
                                 }
                                 hwAddr += datagram.chaddr[i].ToString("X2");
                             }
-                            misc.dhcpLog($"CONN[{connCount}] HW ADDR: {hwAddr}");
-                            misc.dhcpLog($"CONN[{connCount}] SERVER NAME: {System.Text.Encoding.Default.GetString(datagram.sname)}");
+                            dhcpWrite($"CONN[{connCount}] HW ADDR: {hwAddr}");
+                            dhcpWrite($"CONN[{connCount}] SERVER NAME: {System.Text.Encoding.Default.GetString(datagram.sname)}");
                             // break out individual options
 
                             // do stuff
@@ -300,11 +301,11 @@ namespace netUtils
             }
             catch (SocketException e)
             {
-                misc.dhcpLog($"Socket Exception: {e}");
+                dhcpWrite($"Socket Exception: {e}");
             }
             finally
             {
-                misc.dhcpLog($"Closing socket");
+                dhcpWrite($"Closing socket");
                 listener.Close();
                 //listener.Dispose();
             }
@@ -318,7 +319,7 @@ namespace netUtils
             poolStopDHCPtextbox.ReadOnly = false;
             serverPortDHCPtextbox.ReadOnly = false;
             clientPortDHCPtextbox.ReadOnly = false;
-            misc.dhcpLog("Stopping DHCP server...");
+            dhcpWrite("Stopping DHCP server...");
             misc.dhcpCancelToken.Cancel();
         }
 
@@ -337,27 +338,20 @@ namespace netUtils
                 e.Handled = true;
             }
         }
-
-        int dhcpOutputCount = 0;
-        private void timer1_Tick(object sender, EventArgs e)
+        private void dhcpWrite(string input)
         {
-            if (misc.newTextDHCP)
-            {
-                DHCPoutput.Text = misc.dhcpOutputText;
-                misc.newTextDHCP = false;
-            }
-            /*
-            if (dhcpOutputCount != misc.dhcpOutputText.Length)
-            {
-                DHCPoutput.Clear();
-                //DHCPoutput.Text = "";
-                DHCPoutput.AppendText(misc.dhcpOutputText);
-                dhcpOutputCount = misc.dhcpOutputText.Length;
+            input += "\r\n";
 
-                verbose.write($"Updating DHCP output text");
-                this.Refresh();
+            if (DHCPoutput.InvokeRequired)
+            {
+                DHCPoutput.Invoke((Action)(() =>
+                {
+                    DHCPoutput.AppendText(input);
+                }));
+            } else
+            {
+                DHCPoutput.AppendText(input);
             }
-            */
         }
     }
 }
