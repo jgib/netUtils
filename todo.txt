@@ -1,0 +1,4 @@
+DHCP Server
+DNS Server
+VNC Client
+SNMP Client
