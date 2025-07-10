@@ -1,21 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using debug = netUtils.verbose;
 
 namespace netUtils
 {
-    public partial class Form1 : Form
+    public partial class mainForm : Form
     {
-        public Form1()
+        public DateTime lastClick;
+        public double doubleClickThreshold = 150;
+
+        public const int WM_NCLBUTTONDOWN = 0xA1;
+        public const int HTCAPTION = 0x2;
+
+        [DllImport("User32.dll")]
+        public static extern bool ReleaseCapture();
+
+        [DllImport("User32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        public mainForm()
         {
             InitializeComponent();
         }
@@ -35,6 +39,58 @@ namespace netUtils
             {
                 debug.Append($"TEST [{i}]");
             }
+        }
+
+        private void mainForm_MouseDown(object sender, MouseEventArgs e)
+        {
+            if ((DateTime.Now - lastClick).TotalMilliseconds < doubleClickThreshold)
+            {
+                if (this.WindowState == FormWindowState.Maximized)
+                {
+                    this.WindowState = FormWindowState.Normal;
+                }
+                else
+                {
+                    this.WindowState = FormWindowState.Maximized;
+                }
+            }
+            else
+            {
+                Form verboseForm = sender as Form;
+                if (e.Button == MouseButtons.Left)
+                {
+                    ReleaseCapture();
+                    SendMessage(verboseForm.Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
+                }
+            }
+
+            lastClick = DateTime.Now;
+        }
+
+        private void closeButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void minimizeButton_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void maximizeButton_Click(object sender, EventArgs e)
+        {
+            if (this.WindowState != FormWindowState.Maximized)
+            {
+                maximizeButton.Text = "⧉";
+                this.WindowState = FormWindowState.Maximized;
+            }
+            else
+            {
+                maximizeButton.Text = "◻";
+                this.WindowState = FormWindowState.Normal;
+            }
+
+            this.Invalidate(true);
         }
     }
 }

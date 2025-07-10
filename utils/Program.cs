@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace netUtils
@@ -113,7 +109,7 @@ namespace netUtils
         }
         public static void Write(string input, [CallerLineNumber] int lineNumber = 0, [CallerMemberName] string callername = "", [CallerFilePath] string filePath = "")
         {
-            if (_initialized) 
+            if (_initialized)
             {
                 if (input.Length > textBox.MaxLength)
                 {
@@ -133,7 +129,7 @@ namespace netUtils
                 if (input.Length + textBox.Text.Length > textBox.MaxLength)
                 {
                     throw new ArgumentException($"input length [{input.Length}] in addition to current textbox control length [{textBox.Text.Length}] exceeds maximum length for textbox control [{textBox.MaxLength}]");
-                } 
+                }
                 textBox.AppendText($"{DateTime.Now.ToString("HH:mm:ss.fff")} | {filePath}:{lineNumber} | {callername} | {input}\r\n");
             }
         }
@@ -213,11 +209,11 @@ namespace netUtils
                 textBox.GotFocus += new EventHandler(TextBox_GotFocus);
                 //textBox.MouseDown += new MouseEventHandler(TextBox_MouseDown);
 
+                verboseForm.Controls.Add(textBox);
                 verboseForm.Controls.Add(minimizeButton);
                 verboseForm.Controls.Add(maximizeButton);
                 verboseForm.Controls.Add(closeButton);
                 verboseForm.Controls.Add(titleLabel);
-                verboseForm.Controls.Add(textBox);
 
                 verboseForm.Show();
                 //TextBox_GotFocus(textBox, new EventArgs());
@@ -226,7 +222,7 @@ namespace netUtils
         }
         private static void VerboseForm_Load(object sender, EventArgs e)
         {
-           
+
         }
         private static void VerboseForm_MouseDown(object sender, MouseEventArgs e)
         {
@@ -236,11 +232,13 @@ namespace netUtils
                 if (verboseForm.WindowState == FormWindowState.Maximized)
                 {
                     verboseForm.WindowState = FormWindowState.Normal;
-                } else
+                }
+                else
                 {
                     verboseForm.WindowState = FormWindowState.Maximized;
                 }
-            } else
+            }
+            else
             {
                 Form verboseForm = sender as Form;
                 if (e.Button == MouseButtons.Left)
@@ -293,7 +291,8 @@ namespace netUtils
             {
                 button.Text = "⧉";
                 verboseForm.WindowState = FormWindowState.Maximized;
-            } else
+            }
+            else
             {
                 button.Text = "◻";
                 verboseForm.WindowState = FormWindowState.Normal;
@@ -307,7 +306,7 @@ namespace netUtils
             Form verboseForm = button.Parent as Form;
             verboseForm.Close();
         }
-        
+
     }
     internal static class Program
     {
@@ -319,7 +318,7 @@ namespace netUtils
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new mainForm());
         }
     }
 
