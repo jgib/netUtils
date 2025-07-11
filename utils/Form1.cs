@@ -56,11 +56,10 @@ namespace netUtils
             }
             else
             {
-                Form verboseForm = sender as Form;
                 if (e.Button == MouseButtons.Left)
                 {
                     ReleaseCapture();
-                    SendMessage(verboseForm.Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
+                    SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
                 }
             }
 
@@ -91,6 +90,36 @@ namespace netUtils
             }
 
             this.Invalidate(true);
+        }
+
+        private void tabDHCP_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
+            }
+        }
+
+        private void startDHCPbutton_Click(object sender, EventArgs e)
+        {
+            if (startDHCPbutton.Text == "Start")
+            {
+                startDHCPbutton.Text = "Stop";
+            } else
+            {
+                startDHCPbutton.Text = "Start";
+            }
+        }
+
+        private void snmDHCPcheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            snmDHCPtextbox.Enabled = snmDHCPcheckbox.Checked;
+        }
+
+        private void routerDHCPcheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            routerDHCPtextbox.Enabled = routerDHCPcheckbox.Checked;
         }
     }
 }
