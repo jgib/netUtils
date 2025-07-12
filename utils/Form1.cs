@@ -111,15 +111,5 @@ namespace netUtils
                 startDHCPbutton.Text = "Start";
             }
         }
-
-        private void snmDHCPcheckbox_CheckedChanged(object sender, EventArgs e)
-        {
-            snmDHCPtextbox.Enabled = snmDHCPcheckbox.Checked;
-        }
-
-        private void routerDHCPcheckbox_CheckedChanged(object sender, EventArgs e)
-        {
-            routerDHCPtextbox.Enabled = routerDHCPcheckbox.Checked;
-        }
     }
 }
