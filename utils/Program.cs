@@ -3,10 +3,66 @@ using System.Drawing;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace netUtils
 {
+    public static class misc
+    {
+        public static bool IsIP (string ipAddr)
+        {
+            try
+            {
+                IP2int(ipAddr);
+                return true;
+            } catch
+            { 
+                return false;
+            }
+        }
+        public static uint IP2int (string ipAddr)
+        {
+            uint ip = 0;
+            string pattern = @"^(\d{0,3})\.(\d{0,3})\.(\d{0,3})\.(\d{0,3})$";
+
+            if (Regex.IsMatch(ipAddr, pattern))
+            {
+                Match match = Regex.Match(ipAddr, pattern);
+                if (match.Groups.Count == 5)
+                {
+                    for (int i = 1; i < 5; i++)
+                    {
+                        int octet;
+                        try
+                        {
+                            octet = int.Parse(match.Groups[i].Value);
+                        } catch
+                        {
+                            throw;
+                        }
+
+                        if (octet < 0 || octet > 255)
+                        {
+                            throw new Exception($"Octet number {i} out of range: [{octet}]");
+                        } else
+                        {
+                            ip <<= 8;
+                            ip += (uint)octet;
+                        }
+                    }
+                } else
+                {
+                    throw new Exception($"IP address does not match 5 caputre groups: [{match.Groups.Count}]");
+                }
+            } else
+            {
+                throw new Exception($"IP address does not match regular expression {pattern}");
+            }
+
+                return ip;
+        }
+    }
     public static class verbose
     {
         private static bool _initialized = false;

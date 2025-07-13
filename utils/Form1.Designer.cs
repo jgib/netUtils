@@ -52,7 +52,7 @@
             this.rebindTimeDHCPtextbox = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.dnsDHCPtextbox = new System.Windows.Forms.TextBox();
             this.dnsDHCPaddButton = new System.Windows.Forms.Button();
             this.dnsDHCPremoveButton = new System.Windows.Forms.Button();
             this.dnsDHCPlistbox = new System.Windows.Forms.ListBox();
@@ -134,7 +134,7 @@
             this.tabDHCP.Controls.Add(this.dnsDHCPlistbox);
             this.tabDHCP.Controls.Add(this.dnsDHCPremoveButton);
             this.tabDHCP.Controls.Add(this.dnsDHCPaddButton);
-            this.tabDHCP.Controls.Add(this.textBox1);
+            this.tabDHCP.Controls.Add(this.dnsDHCPtextbox);
             this.tabDHCP.Controls.Add(this.label9);
             this.tabDHCP.Controls.Add(this.label8);
             this.tabDHCP.Controls.Add(this.rebindTimeDHCPtextbox);
@@ -336,13 +336,13 @@
             this.label9.TabIndex = 17;
             this.label9.Text = "DNS Servers:";
             // 
-            // textBox1
+            // dnsDHCPtextbox
             // 
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox1.Location = new System.Drawing.Point(391, 6);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(131, 18);
-            this.textBox1.TabIndex = 18;
+            this.dnsDHCPtextbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dnsDHCPtextbox.Location = new System.Drawing.Point(391, 6);
+            this.dnsDHCPtextbox.Name = "dnsDHCPtextbox";
+            this.dnsDHCPtextbox.Size = new System.Drawing.Size(131, 18);
+            this.dnsDHCPtextbox.TabIndex = 18;
             // 
             // dnsDHCPaddButton
             // 
@@ -353,6 +353,7 @@
             this.dnsDHCPaddButton.TabIndex = 19;
             this.dnsDHCPaddButton.Text = "Add";
             this.dnsDHCPaddButton.UseVisualStyleBackColor = true;
+            this.dnsDHCPaddButton.Click += new System.EventHandler(this.dnsDHCPaddButton_Click);
             // 
             // dnsDHCPremoveButton
             // 
@@ -363,6 +364,7 @@
             this.dnsDHCPremoveButton.TabIndex = 20;
             this.dnsDHCPremoveButton.Text = "Remove";
             this.dnsDHCPremoveButton.UseVisualStyleBackColor = true;
+            this.dnsDHCPremoveButton.Click += new System.EventHandler(this.dnsDHCPremoveButton_Click);
             // 
             // dnsDHCPlistbox
             // 
@@ -411,6 +413,7 @@
             this.routersDHCPaddButton.TabIndex = 25;
             this.routersDHCPaddButton.Text = "Add";
             this.routersDHCPaddButton.UseVisualStyleBackColor = true;
+            this.routersDHCPaddButton.Click += new System.EventHandler(this.routersDHCPaddButton_Click);
             // 
             // routersDHCPremoveButton
             // 
@@ -421,6 +424,7 @@
             this.routersDHCPremoveButton.TabIndex = 26;
             this.routersDHCPremoveButton.Text = "Remove";
             this.routersDHCPremoveButton.UseVisualStyleBackColor = true;
+            this.routersDHCPremoveButton.Click += new System.EventHandler(this.routersDHCPremoveButton_Click);
             // 
             // outputDHCPtextbox
             // 
@@ -480,7 +484,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox broadcastDHCPtextbox;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox dnsDHCPtextbox;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox rebindTimeDHCPtextbox;

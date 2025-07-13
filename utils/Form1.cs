@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using debug = netUtils.verbose;
 
 namespace netUtils
@@ -39,6 +38,8 @@ namespace netUtils
             {
                 debug.Append($"TEST [{i}]");
             }
+
+            debug.Append(misc.IsIP("0.0.0.2").ToString());
         }
 
         private void mainForm_MouseDown(object sender, MouseEventArgs e)
@@ -106,9 +107,75 @@ namespace netUtils
             if (startDHCPbutton.Text == "Start")
             {
                 startDHCPbutton.Text = "Stop";
-            } else
+            }
+            else
             {
                 startDHCPbutton.Text = "Start";
+            }
+        }
+
+        private void dnsDHCPaddButton_Click(object sender, EventArgs e)
+        {
+            if (netUtils.misc.IsIP(dnsDHCPtextbox.Text))
+            {
+                if (dnsDHCPlistbox.Items.Contains(dnsDHCPtextbox.Text))
+                {
+                    debug.Append($"Address already exists in list of DNS Servers [{dnsDHCPtextbox.Text}]");
+                    MessageBox.Show($"Address [{dnsDHCPtextbox.Text}] already exists in list");
+                }
+                else
+                {
+                    dnsDHCPlistbox.Items.Add(dnsDHCPtextbox.Text);
+                    dnsDHCPtextbox.Text = "";
+                    dnsDHCPtextbox.Focus();
+                    debug.Append($"Added {dnsDHCPtextbox.Text} to DNS Servers");
+                }
+            }
+            else
+            {
+                MessageBox.Show($"[{dnsDHCPtextbox.Text}] is not a valid IP address");
+                debug.Append($"DNS server invalid [{dnsDHCPtextbox.Text}]");
+            }
+
+        }
+
+        private void routersDHCPaddButton_Click(object sender, EventArgs e)
+        {
+            if (netUtils.misc.IsIP(routersDHCPtextbox.Text))
+            {
+                if (routersDHCPlistbox.Items.Contains(routersDHCPtextbox.Text))
+                {
+                    debug.Append($"Address already exists in list of Routers [{routersDHCPtextbox.Text}]");
+                    MessageBox.Show($"Address [{routersDHCPtextbox.Text}] already exists in list");
+                } else
+                {
+                    routersDHCPlistbox.Items.Add(routersDHCPtextbox.Text);
+                    routersDHCPtextbox.Text = "";
+                    routersDHCPtextbox.Focus();
+                    debug.Append($"Added {routersDHCPtextbox.Text} to Routers");
+                }
+            } else
+            {
+                MessageBox.Show($"[{routersDHCPtextbox.Text}] is not a valid IP address");
+                debug.Append($"Router invalid [{routersDHCPtextbox.Text}]");
+            }
+        }
+
+        private void dnsDHCPremoveButton_Click(object sender, EventArgs e)
+        {
+            if (dnsDHCPlistbox.SelectedItems.Count > 0)
+            {
+                debug.Append($"Removing DNS Server [{dnsDHCPlistbox.Items[dnsDHCPlistbox.SelectedIndex].ToString()}]");
+                dnsDHCPlistbox.Items.RemoveAt(dnsDHCPlistbox.SelectedIndex);
+            }
+        }
+
+        private void routersDHCPremoveButton_Click(object sender, EventArgs e)
+        {
+            if (routersDHCPlistbox.SelectedItems.Count > 0)
+            {
+                debug.Append($"Removing Router [{routersDHCPlistbox.Items[routersDHCPlistbox.SelectedIndex].ToString()}]");
+                routersDHCPlistbox.Items.RemoveAt(routersDHCPlistbox.SelectedIndex);
             }
         }
     }
