@@ -37,11 +37,13 @@ namespace netUtils
                 }
             }
 
-            toolTip1.SetToolTip(snmLabel, "   The subnet mask option specifies the client's subnet mask as per RFC\r\n   950 ");
-            toolTip1.SetToolTip(broadcastLabel, "   This option specifies the broadcast address in use on the client's\r\n   subnet.");
-            toolTip1.SetToolTip(serverIdLabel, "   The identifier is the IP address of the selected server.");
-            toolTip1.SetToolTip(leaseTimeLabel, "   The time is in units of seconds, and is specified as a 32-bit\r\n   unsigned integer.");
-            toolTip1.SetToolTip(renewTimeLabel, "   The value is in units of seconds, and is specified as a 32-bit\r\n   unsigned integer.");
+            toolTip1.SetToolTip(poolStartLabel,  "   First address in DHCP pool");
+            toolTip1.SetToolTip(poolEndLabel,    "   Last address in DHCP pool");
+            toolTip1.SetToolTip(snmLabel,        "   The subnet mask option specifies the client's subnet mask as per RFC\r\n   950 ");
+            toolTip1.SetToolTip(broadcastLabel,  "   This option specifies the broadcast address in use on the client's\r\n   subnet.");
+            toolTip1.SetToolTip(serverIdLabel,   "   The identifier is the IP address of the selected server.");
+            toolTip1.SetToolTip(leaseTimeLabel,  "   The time is in units of seconds, and is specified as a 32-bit\r\n   unsigned integer.");
+            toolTip1.SetToolTip(renewTimeLabel,  "   The value is in units of seconds, and is specified as a 32-bit\r\n   unsigned integer.");
             toolTip1.SetToolTip(rebindTimeLabel, "   The value is in units of seconds, and is specified as a 32-bit\r\n   unsigned integer.");
 
             for (int i = 0; i < 7; i++)

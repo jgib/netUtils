@@ -64,6 +64,8 @@
             this.poolStartLabel = new System.Windows.Forms.Label();
             this.tabDNS = new System.Windows.Forms.TabPage();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabDHCP.SuspendLayout();
             this.SuspendLayout();
@@ -127,6 +129,8 @@
             // tabDHCP
             // 
             this.tabDHCP.BackColor = System.Drawing.SystemColors.Control;
+            this.tabDHCP.Controls.Add(this.label2);
+            this.tabDHCP.Controls.Add(this.label1);
             this.tabDHCP.Controls.Add(this.outputDHCPtextbox);
             this.tabDHCP.Controls.Add(this.routersDHCPremoveButton);
             this.tabDHCP.Controls.Add(this.routersDHCPaddButton);
@@ -391,7 +395,7 @@
             this.startDHCPbutton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.startDHCPbutton.Location = new System.Drawing.Point(11, 233);
             this.startDHCPbutton.Name = "startDHCPbutton";
-            this.startDHCPbutton.Size = new System.Drawing.Size(245, 47);
+            this.startDHCPbutton.Size = new System.Drawing.Size(99, 47);
             this.startDHCPbutton.TabIndex = 5;
             this.startDHCPbutton.Text = "Start";
             this.startDHCPbutton.UseVisualStyleBackColor = true;
@@ -449,6 +453,26 @@
             this.toolTip1.AutoPopDelay = 0;
             this.toolTip1.InitialDelay = 100;
             this.toolTip1.ReshowDelay = 20;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(123, 233);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(89, 11);
+            this.label1.TabIndex = 28;
+            this.label1.Text = "Server Port:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(123, 269);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(89, 11);
+            this.label2.TabIndex = 29;
+            this.label2.Text = "Client Port:";
             // 
             // mainForm
             // 
@@ -510,6 +534,8 @@
         private System.Windows.Forms.ListBox routersDHCPlistbox;
         private System.Windows.Forms.TextBox outputDHCPtextbox;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
     }
 }
 
