@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using debug = netUtils.verbose;
 
 namespace netUtils
@@ -18,6 +19,8 @@ namespace netUtils
 
         [DllImport("User32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        [DllImport("User32.dll")]
+        public static extern bool HideCaret(IntPtr hWnd);
         public mainForm()
         {
             InitializeComponent();
@@ -33,6 +36,13 @@ namespace netUtils
                     debug.CreateForm();
                 }
             }
+
+            toolTip1.SetToolTip(snmLabel, "   The subnet mask option specifies the client's subnet mask as per RFC\r\n   950 ");
+            toolTip1.SetToolTip(broadcastLabel, "   This option specifies the broadcast address in use on the client's\r\n   subnet.");
+            toolTip1.SetToolTip(serverIdLabel, "   The identifier is the IP address of the selected server.");
+            toolTip1.SetToolTip(leaseTimeLabel, "   The time is in units of seconds, and is specified as a 32-bit\r\n   unsigned integer.");
+            toolTip1.SetToolTip(renewTimeLabel, "   The value is in units of seconds, and is specified as a 32-bit\r\n   unsigned integer.");
+            toolTip1.SetToolTip(rebindTimeLabel, "   The value is in units of seconds, and is specified as a 32-bit\r\n   unsigned integer.");
 
             for (int i = 0; i < 7; i++)
             {
@@ -107,6 +117,99 @@ namespace netUtils
             if (startDHCPbutton.Text == "Start")
             {
                 startDHCPbutton.Text = "Stop";
+
+                if (!misc.IsIP(poolStartTextbox.Text))
+                {
+                    string errTxt = $"Pool start address is not a valid IP [{poolStartTextbox.Text}]";
+                    MessageBox.Show(errTxt);
+                    debug.Append(errTxt);
+                    outputDHCPtextbox.AppendText(errTxt + "\r\n");
+                    startDHCPbutton.Text = "Start";
+                    return;
+                }
+                if (!misc.IsIP(poolEndTextbox.Text))
+                {
+                    string errTxt = $"Pool end address is not a valid IP [{poolEndTextbox.Text}]";
+                    MessageBox.Show(errTxt);
+                    debug.Append(errTxt);
+                    outputDHCPtextbox.AppendText(errTxt + "\r\n");
+                    startDHCPbutton.Text = "Start";
+                    return;
+                }
+                if (misc.IP2int(poolStartTextbox.Text) > misc.IP2int(poolEndTextbox.Text))
+                {
+                    string errTxt = $"Pool start address is larger than pool end address [{poolStartTextbox.Text} > {poolEndTextbox.Text}]";
+                    MessageBox.Show(errTxt);
+                    debug.Append(errTxt);
+                    outputDHCPtextbox.AppendText(errTxt + "\r\n");
+                    startDHCPbutton.Text = "Start";
+                    return;
+                }
+                if (snmDHCPtextbox.Text.Trim() != String.Empty && !misc.IsIP(snmDHCPtextbox.Text))
+                {
+                    string errTxt = $"Subnet mask address is not a valid IP [{snmDHCPtextbox.Text}]";
+                    MessageBox.Show(errTxt);
+                    debug.Append(errTxt);
+                    outputDHCPtextbox.AppendText(errTxt + "\r\n");
+                    startDHCPbutton.Text = "Start";
+                    return;
+                }
+                if (broadcastDHCPtextbox.Text.Trim() != String.Empty && !misc.IsIP(broadcastDHCPtextbox.Text))
+                {
+                    string errTxt = $"Broadcast address is not a valid IP [{broadcastDHCPtextbox.Text}]";
+                    MessageBox.Show(errTxt);
+                    debug.Append(errTxt);
+                    outputDHCPtextbox.AppendText(errTxt + "\r\n");
+                    startDHCPbutton.Text = "Start";
+                    return;
+                }
+                if (serverIdDHCPtextbox.Text.Trim() != String.Empty && !misc.IsIP(serverIdDHCPtextbox.Text))
+                {
+                    string errTxt = $"Server ID address is not a valid IP [{serverIdDHCPtextbox.Text}]";
+                    MessageBox.Show(errTxt);
+                    debug.Append(errTxt);
+                    outputDHCPtextbox.AppendText(errTxt + "\r\n");
+                    startDHCPbutton.Text = "Start";
+                    return;
+                }
+                
+                try
+                {
+                    uint.Parse(leaseTimeDHCPtextbox.Text.Trim());
+                } catch
+                {
+                    string errTxt = $"Lease time is not valid [{leaseTimeDHCPtextbox.Text}]";
+                    MessageBox.Show(errTxt);
+                    debug.Append(errTxt);
+                    outputDHCPtextbox.AppendText(errTxt + "\r\n");
+                    startDHCPbutton.Text = "Start";
+                    return;
+                }
+                try
+                {
+                    uint.Parse(renewTimeDHCPtextbox.Text.Trim());
+                } catch
+                {
+                    string errTxt = $"Renew time is not valid [{renewTimeDHCPtextbox.Text}]";
+                    MessageBox.Show(errTxt);
+                    debug.Append(errTxt);
+                    outputDHCPtextbox.AppendText(errTxt + "\r\n");
+                    startDHCPbutton.Text = "Start";
+                    return;
+                }
+                try
+                {
+                    uint.Parse(rebindTimeDHCPtextbox.Text.Trim());
+                } catch
+                {
+                    string errTxt = $"Rebind time is not valid [{rebindTimeDHCPtextbox.Text}]";
+                    MessageBox.Show(errTxt);
+                    debug.Append(errTxt);
+                    outputDHCPtextbox.AppendText(errTxt + "\r\n");
+                    startDHCPbutton.Text = "Start";
+                    return;
+                }
+                
             }
             else
             {
@@ -177,6 +280,11 @@ namespace netUtils
                 debug.Append($"Removing Router [{routersDHCPlistbox.Items[routersDHCPlistbox.SelectedIndex].ToString()}]");
                 routersDHCPlistbox.Items.RemoveAt(routersDHCPlistbox.SelectedIndex);
             }
+        }
+
+        private void outputDHCPtextbox_Enter(object sender, EventArgs e)
+        {
+            HideCaret(outputDHCPtextbox.Handle);
         }
     }
 }
