@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -117,6 +118,8 @@ namespace netUtils
         private void startDHCPbutton_Click(object sender, EventArgs e)
         {
             dhcp.dhcpServer server = new dhcp.dhcpServer();
+            server.dnsServers = new List<string>();
+            server.routers = new List<string>();
 
             if (startDHCPbutton.Text == "Start")
             {
@@ -154,6 +157,13 @@ namespace netUtils
                 }
                 server.poolStart = poolStartTextbox.Text;
                 server.poolEnd = poolEndTextbox.Text;
+                outTxt = $"POOL START:  {server.poolStart}";
+                outputDHCPtextbox.AppendText(outTxt + "\r\n");
+                debug.Append(outTxt);
+                outTxt = $"POOL END:    {server.poolEnd}";
+                outputDHCPtextbox.AppendText(outTxt + "\r\n");
+                debug.Append(outTxt);
+
                 if (snmDHCPtextbox.Text.Trim() != String.Empty && !misc.IsIP(snmDHCPtextbox.Text))
                 {
                     string errTxt = $"Subnet mask address is not a valid IP [{snmDHCPtextbox.Text}]";
@@ -164,6 +174,10 @@ namespace netUtils
                     return;
                 }
                 server.snm = snmDHCPtextbox.Text;
+                outTxt = $"SUBNET MASK: {server.snm}";
+                outputDHCPtextbox.AppendText(outTxt + "\r\n");
+                debug.Append(outTxt);
+
                 if (broadcastDHCPtextbox.Text.Trim() != String.Empty && !misc.IsIP(broadcastDHCPtextbox.Text))
                 {
                     string errTxt = $"Broadcast address is not a valid IP [{broadcastDHCPtextbox.Text}]";
@@ -174,6 +188,10 @@ namespace netUtils
                     return;
                 }
                 server.broadcast = broadcastDHCPtextbox.Text;
+                outTxt = $"BROADCAST:   {server.broadcast}";
+                outputDHCPtextbox.AppendText(outTxt + "\r\n");
+                debug.Append(outTxt);
+
                 if (serverIdDHCPtextbox.Text.Trim() != String.Empty && !misc.IsIP(serverIdDHCPtextbox.Text))
                 {
                     string errTxt = $"Server ID address is not a valid IP [{serverIdDHCPtextbox.Text}]";
@@ -184,10 +202,16 @@ namespace netUtils
                     return;
                 }
                 server.serverId = serverIdDHCPtextbox.Text;
+                outTxt = $"SERVER ID:   {server.serverId}";
+                outputDHCPtextbox.AppendText(outTxt + "\r\n");
+                debug.Append(outTxt);
 
                 try
                 {
                     server.lease = uint.Parse(leaseTimeDHCPtextbox.Text.Trim());
+                    outTxt = $"LEASE TIME:  {server.lease} seconds";
+                    outputDHCPtextbox.AppendText(outTxt + "\r\n");
+                    debug.Append(outTxt);
                 }
                 catch (Exception ex)
                 {
@@ -201,6 +225,9 @@ namespace netUtils
                 try
                 {
                     server.renew = uint.Parse(renewTimeDHCPtextbox.Text.Trim());
+                    outTxt = $"RENEW TIME:  {server.renew} seconds";
+                    outputDHCPtextbox.AppendText(outTxt + "\r\n");
+                    debug.Append(outTxt);
                 }
                 catch (Exception ex)
                 {
@@ -214,13 +241,12 @@ namespace netUtils
                 try
                 {
                     server.rebind = uint.Parse(rebindTimeDHCPtextbox.Text.Trim());
+                    outTxt = $"REBIND TIME: {server.rebind} seconds";
+                    outputDHCPtextbox.AppendText(outTxt + "\r\n");
+                    debug.Append(outTxt);
                 }
                 catch (Exception ex)
                 {
-                    string errTxt = $"Rebind time is not valid [{rebindTimeDHCPtextbox.Text}]\r\nException: {ex.Message}";
-                    MessageBox.Show(errTxt);
-                    debug.Append(errTxt);
-                    outputDHCPtextbox.AppendText(errTxt + "\r\n");
                     startDHCPbutton.Text = "Start";
                     return;
                 }
@@ -267,30 +293,14 @@ namespace netUtils
                     debug.Append(outTxt);
                 }
 
-                outTxt = $"POOL START:  {server.poolStart}";
-                outputDHCPtextbox.AppendText(outTxt + "\r\n");
-                debug.Append(outTxt);
-                outTxt = $"POOL END:    {server.poolEnd}";
-                outputDHCPtextbox.AppendText(outTxt + "\r\n");
-                debug.Append(outTxt);
-                outTxt = $"SUBNET MASK: {server.snm}";
-                outputDHCPtextbox.AppendText(outTxt + "\r\n");
-                debug.Append(outTxt);
-                outTxt = $"BROADCAST:   {server.broadcast}";
-                outputDHCPtextbox.AppendText(outTxt + "\r\n");
-                debug.Append(outTxt);
-                outTxt = $"SERVER ID:   {server.serverId}";
-                outputDHCPtextbox.AppendText(outTxt + "\r\n");
-                debug.Append(outTxt);
-                outTxt = $"LEASE TIME:  {server.lease} seconds";
-                outputDHCPtextbox.AppendText(outTxt + "\r\n");
-                debug.Append(outTxt);
-                outTxt = $"RENEW TIME:  {server.renew} seconds";
-                outputDHCPtextbox.AppendText(outTxt + "\r\n");
-                debug.Append(outTxt);
-                outTxt = $"REBIND TIME: {server.rebind} seconds";
-                outputDHCPtextbox.AppendText(outTxt + "\r\n");
-                debug.Append(outTxt);
+
+
+
+
+
+
+
+
                 //do dns and routers
             }
             else
