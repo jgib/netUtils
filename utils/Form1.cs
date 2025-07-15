@@ -116,10 +116,15 @@ namespace netUtils
 
         private void startDHCPbutton_Click(object sender, EventArgs e)
         {
+            dhcp.dhcpServer server = new dhcp.dhcpServer();
+
             if (startDHCPbutton.Text == "Start")
             {
                 startDHCPbutton.Text = "Stop";
-
+                string outTxt = $"DHCP Server Starting...";
+                outputDHCPtextbox.AppendText(outTxt + "\r\n");
+                debug.Append(outTxt);
+                
                 if (!misc.IsIP(poolStartTextbox.Text))
                 {
                     string errTxt = $"Pool start address is not a valid IP [{poolStartTextbox.Text}]";
@@ -147,6 +152,8 @@ namespace netUtils
                     startDHCPbutton.Text = "Start";
                     return;
                 }
+                server.poolStart = poolStartTextbox.Text;
+                server.poolEnd = poolEndTextbox.Text;
                 if (snmDHCPtextbox.Text.Trim() != String.Empty && !misc.IsIP(snmDHCPtextbox.Text))
                 {
                     string errTxt = $"Subnet mask address is not a valid IP [{snmDHCPtextbox.Text}]";
@@ -156,6 +163,7 @@ namespace netUtils
                     startDHCPbutton.Text = "Start";
                     return;
                 }
+                server.snm = snmDHCPtextbox.Text;
                 if (broadcastDHCPtextbox.Text.Trim() != String.Empty && !misc.IsIP(broadcastDHCPtextbox.Text))
                 {
                     string errTxt = $"Broadcast address is not a valid IP [{broadcastDHCPtextbox.Text}]";
@@ -165,6 +173,7 @@ namespace netUtils
                     startDHCPbutton.Text = "Start";
                     return;
                 }
+                server.broadcast = broadcastDHCPtextbox.Text;
                 if (serverIdDHCPtextbox.Text.Trim() != String.Empty && !misc.IsIP(serverIdDHCPtextbox.Text))
                 {
                     string errTxt = $"Server ID address is not a valid IP [{serverIdDHCPtextbox.Text}]";
@@ -174,10 +183,11 @@ namespace netUtils
                     startDHCPbutton.Text = "Start";
                     return;
                 }
-                
+                server.serverId = serverIdDHCPtextbox.Text;
+
                 try
                 {
-                    uint.Parse(leaseTimeDHCPtextbox.Text.Trim());
+                    server.lease = uint.Parse(leaseTimeDHCPtextbox.Text.Trim());
                 }
                 catch (Exception ex)
                 {
@@ -190,7 +200,7 @@ namespace netUtils
                 }
                 try
                 {
-                    uint.Parse(renewTimeDHCPtextbox.Text.Trim());
+                    server.renew = uint.Parse(renewTimeDHCPtextbox.Text.Trim());
                 }
                 catch (Exception ex)
                 {
@@ -203,7 +213,7 @@ namespace netUtils
                 }
                 try
                 {
-                    uint.Parse(rebindTimeDHCPtextbox.Text.Trim());
+                    server.rebind = uint.Parse(rebindTimeDHCPtextbox.Text.Trim());
                 }
                 catch (Exception ex)
                 {
@@ -216,7 +226,7 @@ namespace netUtils
                 }
                 try
                 {
-                    ushort.Parse(serverDHCPPortTextbox.Text);
+                    server.serverPort = ushort.Parse(serverDHCPPortTextbox.Text);
                 }
                 catch (Exception ex)
                 {
@@ -229,7 +239,7 @@ namespace netUtils
                 }
                 try
                 {
-                    ushort.Parse(clientDHCPPortTextbox.Text);
+                    server.clientPort = ushort.Parse(clientDHCPPortTextbox.Text);
                 }
                 catch (Exception ex)
                 {
@@ -240,10 +250,53 @@ namespace netUtils
                     startDHCPbutton.Text = "Start";
                     return;
                 }
+
+                for (int i = 0; i < dnsDHCPlistbox.Items.Count; i++)
+                {
+                    server.dnsServers.Add(dnsDHCPlistbox.Items[i].ToString());
+                    outTxt = $"DNS SERVER:  {server.dnsServers[i]}";
+                    outputDHCPtextbox.AppendText(outTxt + "\r\n");
+                    debug.Append(outTxt);
+                }
+
+                for (int i = 0; i < routersDHCPlistbox.Items.Count; i++)
+                {
+                    server.routers.Add(routersDHCPlistbox.Items[i].ToString());
+                    outTxt = $"ROUTER:      {server.routers[i]}";
+                    outputDHCPtextbox.AppendText(outTxt + "\r\n");
+                    debug.Append(outTxt);
+                }
+
+                outTxt = $"POOL START:  {server.poolStart}";
+                outputDHCPtextbox.AppendText(outTxt + "\r\n");
+                debug.Append(outTxt);
+                outTxt = $"POOL END:    {server.poolEnd}";
+                outputDHCPtextbox.AppendText(outTxt + "\r\n");
+                debug.Append(outTxt);
+                outTxt = $"SUBNET MASK: {server.snm}";
+                outputDHCPtextbox.AppendText(outTxt + "\r\n");
+                debug.Append(outTxt);
+                outTxt = $"BROADCAST:   {server.broadcast}";
+                outputDHCPtextbox.AppendText(outTxt + "\r\n");
+                debug.Append(outTxt);
+                outTxt = $"SERVER ID:   {server.serverId}";
+                outputDHCPtextbox.AppendText(outTxt + "\r\n");
+                debug.Append(outTxt);
+                outTxt = $"LEASE TIME:  {server.lease} seconds";
+                outputDHCPtextbox.AppendText(outTxt + "\r\n");
+                debug.Append(outTxt);
+                outTxt = $"RENEW TIME:  {server.renew} seconds";
+                outputDHCPtextbox.AppendText(outTxt + "\r\n");
+                debug.Append(outTxt);
+                outTxt = $"REBIND TIME: {server.rebind} seconds";
+                outputDHCPtextbox.AppendText(outTxt + "\r\n");
+                debug.Append(outTxt);
+                //do dns and routers
             }
             else
             {
                 startDHCPbutton.Text = "Start";
+
             }
         }
 

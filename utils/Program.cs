@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -8,6 +9,24 @@ using System.Windows.Forms;
 
 namespace netUtils
 {
+    public static class dhcp
+    {
+        public struct dhcpServer
+        {
+            public string poolStart;
+            public string poolEnd;
+            public string snm;
+            public string broadcast;
+            public string serverId;
+            public uint lease;
+            public uint renew;
+            public uint rebind;
+            public ushort clientPort;
+            public ushort serverPort;
+            public List<string> dnsServers;
+            public List<string> routers;
+        }
+    }
     public static class misc
     {
         public static bool IsIP (string ipAddr)

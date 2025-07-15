@@ -38,9 +38,9 @@
               "Title": "Form1.cs",
               "DocumentMoniker": "U:\\users\\jasong\\code\\netUtils\\utils\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",
-              "ToolTip": "U:\\users\\jasong\\code\\netUtils\\utils\\Form1.cs*",
-              "RelativeToolTip": "Form1.cs*",
-              "ViewState": "AgIAANAAAAAAAAAAAAAuwOsAAAAsAAAAAAAAAA==",
+              "ToolTip": "U:\\users\\jasong\\code\\netUtils\\utils\\Form1.cs",
+              "RelativeToolTip": "Form1.cs",
+              "ViewState": "AgIAAPIAAAAAAAAAAAAAAAwBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-09T19:30:59.323Z",
               "EditorCaption": ""
@@ -51,8 +51,8 @@
               "Title": "Form1.cs [Design]",
               "DocumentMoniker": "U:\\users\\jasong\\code\\netUtils\\utils\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",
-              "ToolTip": "U:\\users\\jasong\\code\\netUtils\\utils\\Form1.cs [Design]*",
-              "RelativeToolTip": "Form1.cs [Design]*",
+              "ToolTip": "U:\\users\\jasong\\code\\netUtils\\utils\\Form1.cs [Design]",
+              "RelativeToolTip": "Form1.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-09T19:30:49.439Z",
               "EditorCaption": " [Design]"
@@ -65,7 +65,7 @@
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "U:\\users\\jasong\\code\\netUtils\\utils\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAABMBAAAAAAAAAAAMwNYAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAEAAAAAAAAAAIAwwBoAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-09T19:30:47.449Z",
               "EditorCaption": ""
