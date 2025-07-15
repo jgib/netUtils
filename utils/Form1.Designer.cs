@@ -66,6 +66,8 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.serverDHCPPortTextbox = new System.Windows.Forms.TextBox();
+            this.clientDHCPPortTextbox = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabDHCP.SuspendLayout();
             this.SuspendLayout();
@@ -129,6 +131,8 @@
             // tabDHCP
             // 
             this.tabDHCP.BackColor = System.Drawing.SystemColors.Control;
+            this.tabDHCP.Controls.Add(this.clientDHCPPortTextbox);
+            this.tabDHCP.Controls.Add(this.serverDHCPPortTextbox);
             this.tabDHCP.Controls.Add(this.label2);
             this.tabDHCP.Controls.Add(this.label1);
             this.tabDHCP.Controls.Add(this.outputDHCPtextbox);
@@ -458,21 +462,41 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(123, 233);
+            this.label1.Location = new System.Drawing.Point(123, 235);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(89, 11);
             this.label1.TabIndex = 28;
             this.label1.Text = "Server Port:";
+            this.toolTip1.SetToolTip(this.label1, "Port for server to listen [UDP]");
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(123, 269);
+            this.label2.Location = new System.Drawing.Point(123, 259);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(89, 11);
             this.label2.TabIndex = 29;
             this.label2.Text = "Client Port:";
+            this.toolTip1.SetToolTip(this.label2, "Port for client to listen [UDP]");
+            // 
+            // serverDHCPPortTextbox
+            // 
+            this.serverDHCPPortTextbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.serverDHCPPortTextbox.Location = new System.Drawing.Point(218, 233);
+            this.serverDHCPPortTextbox.Name = "serverDHCPPortTextbox";
+            this.serverDHCPPortTextbox.Size = new System.Drawing.Size(38, 18);
+            this.serverDHCPPortTextbox.TabIndex = 30;
+            this.serverDHCPPortTextbox.Text = "67";
+            // 
+            // clientDHCPPortTextbox
+            // 
+            this.clientDHCPPortTextbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.clientDHCPPortTextbox.Location = new System.Drawing.Point(218, 257);
+            this.clientDHCPPortTextbox.Name = "clientDHCPPortTextbox";
+            this.clientDHCPPortTextbox.Size = new System.Drawing.Size(38, 18);
+            this.clientDHCPPortTextbox.TabIndex = 31;
+            this.clientDHCPPortTextbox.Text = "68";
             // 
             // mainForm
             // 
@@ -536,6 +560,8 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox serverDHCPPortTextbox;
+        private System.Windows.Forms.TextBox clientDHCPPortTextbox;
     }
 }
 

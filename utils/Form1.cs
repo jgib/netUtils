@@ -178,9 +178,10 @@ namespace netUtils
                 try
                 {
                     uint.Parse(leaseTimeDHCPtextbox.Text.Trim());
-                } catch
+                }
+                catch (Exception ex)
                 {
-                    string errTxt = $"Lease time is not valid [{leaseTimeDHCPtextbox.Text}]";
+                    string errTxt = $"Lease time is not valid [{leaseTimeDHCPtextbox.Text}]\r\nException: {ex.Message}";
                     MessageBox.Show(errTxt);
                     debug.Append(errTxt);
                     outputDHCPtextbox.AppendText(errTxt + "\r\n");
@@ -190,9 +191,10 @@ namespace netUtils
                 try
                 {
                     uint.Parse(renewTimeDHCPtextbox.Text.Trim());
-                } catch
+                }
+                catch (Exception ex)
                 {
-                    string errTxt = $"Renew time is not valid [{renewTimeDHCPtextbox.Text}]";
+                    string errTxt = $"Renew time is not valid [{renewTimeDHCPtextbox.Text}]\r\nException: {ex.Message}";
                     MessageBox.Show(errTxt);
                     debug.Append(errTxt);
                     outputDHCPtextbox.AppendText(errTxt + "\r\n");
@@ -202,16 +204,42 @@ namespace netUtils
                 try
                 {
                     uint.Parse(rebindTimeDHCPtextbox.Text.Trim());
-                } catch
+                }
+                catch (Exception ex)
                 {
-                    string errTxt = $"Rebind time is not valid [{rebindTimeDHCPtextbox.Text}]";
+                    string errTxt = $"Rebind time is not valid [{rebindTimeDHCPtextbox.Text}]\r\nException: {ex.Message}";
                     MessageBox.Show(errTxt);
                     debug.Append(errTxt);
                     outputDHCPtextbox.AppendText(errTxt + "\r\n");
                     startDHCPbutton.Text = "Start";
                     return;
                 }
-                
+                try
+                {
+                    ushort.Parse(serverDHCPPortTextbox.Text);
+                }
+                catch (Exception ex)
+                {
+                    string errTxt = $"Server port number is not valid [{serverDHCPPortTextbox.Text}]\r\nException: {ex.Message}";
+                    MessageBox.Show(errTxt);
+                    debug.Append(errTxt);
+                    outputDHCPtextbox.AppendText(errTxt + "\r\n");
+                    startDHCPbutton.Text = "Start";
+                    return;
+                }
+                try
+                {
+                    ushort.Parse(clientDHCPPortTextbox.Text);
+                }
+                catch (Exception ex)
+                {
+                    string errTxt = $"Client port number is not valid [{clientDHCPPortTextbox.Text}]\r\nException: {ex.Message}";
+                    MessageBox.Show(errTxt);
+                    debug.Append(errTxt);
+                    outputDHCPtextbox.AppendText(errTxt + "\r\n");
+                    startDHCPbutton.Text = "Start";
+                    return;
+                }
             }
             else
             {
