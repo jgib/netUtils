@@ -192,7 +192,7 @@
             this.routersDHCPremoveButton.Location = new System.Drawing.Point(576, 75);
             this.routersDHCPremoveButton.Name = "routersDHCPremoveButton";
             this.routersDHCPremoveButton.Size = new System.Drawing.Size(75, 23);
-            this.routersDHCPremoveButton.TabIndex = 26;
+            this.routersDHCPremoveButton.TabIndex = 16;
             this.routersDHCPremoveButton.Text = "Remove";
             this.routersDHCPremoveButton.UseVisualStyleBackColor = true;
             this.routersDHCPremoveButton.Click += new System.EventHandler(this.routersDHCPremoveButton_Click);
@@ -203,7 +203,7 @@
             this.routersDHCPaddButton.Location = new System.Drawing.Point(576, 46);
             this.routersDHCPaddButton.Name = "routersDHCPaddButton";
             this.routersDHCPaddButton.Size = new System.Drawing.Size(75, 23);
-            this.routersDHCPaddButton.TabIndex = 25;
+            this.routersDHCPaddButton.TabIndex = 15;
             this.routersDHCPaddButton.Text = "Add";
             this.routersDHCPaddButton.UseVisualStyleBackColor = true;
             this.routersDHCPaddButton.Click += new System.EventHandler(this.routersDHCPaddButton_Click);
@@ -224,7 +224,7 @@
             this.routersDHCPtextbox.Location = new System.Drawing.Point(657, 6);
             this.routersDHCPtextbox.Name = "routersDHCPtextbox";
             this.routersDHCPtextbox.Size = new System.Drawing.Size(131, 18);
-            this.routersDHCPtextbox.TabIndex = 23;
+            this.routersDHCPtextbox.TabIndex = 14;
             // 
             // label10
             // 
@@ -252,7 +252,7 @@
             this.dnsDHCPremoveButton.Location = new System.Drawing.Point(298, 75);
             this.dnsDHCPremoveButton.Name = "dnsDHCPremoveButton";
             this.dnsDHCPremoveButton.Size = new System.Drawing.Size(75, 23);
-            this.dnsDHCPremoveButton.TabIndex = 20;
+            this.dnsDHCPremoveButton.TabIndex = 13;
             this.dnsDHCPremoveButton.Text = "Remove";
             this.dnsDHCPremoveButton.UseVisualStyleBackColor = true;
             this.dnsDHCPremoveButton.Click += new System.EventHandler(this.dnsDHCPremoveButton_Click);
@@ -263,7 +263,7 @@
             this.dnsDHCPaddButton.Location = new System.Drawing.Point(298, 46);
             this.dnsDHCPaddButton.Name = "dnsDHCPaddButton";
             this.dnsDHCPaddButton.Size = new System.Drawing.Size(75, 23);
-            this.dnsDHCPaddButton.TabIndex = 19;
+            this.dnsDHCPaddButton.TabIndex = 12;
             this.dnsDHCPaddButton.Text = "Add";
             this.dnsDHCPaddButton.UseVisualStyleBackColor = true;
             this.dnsDHCPaddButton.Click += new System.EventHandler(this.dnsDHCPaddButton_Click);
@@ -274,7 +274,7 @@
             this.dnsDHCPtextbox.Location = new System.Drawing.Point(391, 6);
             this.dnsDHCPtextbox.Name = "dnsDHCPtextbox";
             this.dnsDHCPtextbox.Size = new System.Drawing.Size(131, 18);
-            this.dnsDHCPtextbox.TabIndex = 18;
+            this.dnsDHCPtextbox.TabIndex = 11;
             // 
             // label9
             // 
@@ -302,7 +302,8 @@
             this.rebindTimeDHCPtextbox.Location = new System.Drawing.Point(125, 209);
             this.rebindTimeDHCPtextbox.Name = "rebindTimeDHCPtextbox";
             this.rebindTimeDHCPtextbox.Size = new System.Drawing.Size(131, 18);
-            this.rebindTimeDHCPtextbox.TabIndex = 15;
+            this.rebindTimeDHCPtextbox.TabIndex = 8;
+            this.rebindTimeDHCPtextbox.Text = "86400";
             // 
             // renewTimeLabel
             // 
@@ -320,7 +321,8 @@
             this.renewTimeDHCPtextbox.Location = new System.Drawing.Point(125, 180);
             this.renewTimeDHCPtextbox.Name = "renewTimeDHCPtextbox";
             this.renewTimeDHCPtextbox.Size = new System.Drawing.Size(131, 18);
-            this.renewTimeDHCPtextbox.TabIndex = 13;
+            this.renewTimeDHCPtextbox.TabIndex = 7;
+            this.renewTimeDHCPtextbox.Text = "86400";
             // 
             // leaseTimeLabel
             // 
@@ -338,7 +340,8 @@
             this.leaseTimeDHCPtextbox.Location = new System.Drawing.Point(125, 151);
             this.leaseTimeDHCPtextbox.Name = "leaseTimeDHCPtextbox";
             this.leaseTimeDHCPtextbox.Size = new System.Drawing.Size(131, 18);
-            this.leaseTimeDHCPtextbox.TabIndex = 11;
+            this.leaseTimeDHCPtextbox.TabIndex = 6;
+            this.leaseTimeDHCPtextbox.Text = "259200";
             // 
             // serverIdLabel
             // 
@@ -356,7 +359,7 @@
             this.serverIdDHCPtextbox.Location = new System.Drawing.Point(125, 122);
             this.serverIdDHCPtextbox.Name = "serverIdDHCPtextbox";
             this.serverIdDHCPtextbox.Size = new System.Drawing.Size(131, 18);
-            this.serverIdDHCPtextbox.TabIndex = 9;
+            this.serverIdDHCPtextbox.TabIndex = 5;
             // 
             // broadcastLabel
             // 
@@ -374,7 +377,7 @@
             this.broadcastDHCPtextbox.Location = new System.Drawing.Point(125, 93);
             this.broadcastDHCPtextbox.Name = "broadcastDHCPtextbox";
             this.broadcastDHCPtextbox.Size = new System.Drawing.Size(131, 18);
-            this.broadcastDHCPtextbox.TabIndex = 7;
+            this.broadcastDHCPtextbox.TabIndex = 4;
             // 
             // snmLabel
             // 
@@ -392,7 +395,7 @@
             this.snmDHCPtextbox.Location = new System.Drawing.Point(125, 64);
             this.snmDHCPtextbox.Name = "snmDHCPtextbox";
             this.snmDHCPtextbox.Size = new System.Drawing.Size(131, 18);
-            this.snmDHCPtextbox.TabIndex = 2;
+            this.snmDHCPtextbox.TabIndex = 3;
             // 
             // startDHCPbutton
             // 
@@ -411,7 +414,7 @@
             this.poolEndTextbox.Location = new System.Drawing.Point(125, 35);
             this.poolEndTextbox.Name = "poolEndTextbox";
             this.poolEndTextbox.Size = new System.Drawing.Size(131, 18);
-            this.poolEndTextbox.TabIndex = 3;
+            this.poolEndTextbox.TabIndex = 2;
             // 
             // poolEndLabel
             // 
@@ -486,7 +489,7 @@
             this.serverDHCPPortTextbox.Location = new System.Drawing.Point(218, 233);
             this.serverDHCPPortTextbox.Name = "serverDHCPPortTextbox";
             this.serverDHCPPortTextbox.Size = new System.Drawing.Size(38, 18);
-            this.serverDHCPPortTextbox.TabIndex = 30;
+            this.serverDHCPPortTextbox.TabIndex = 9;
             this.serverDHCPPortTextbox.Text = "67";
             // 
             // clientDHCPPortTextbox
@@ -495,7 +498,7 @@
             this.clientDHCPPortTextbox.Location = new System.Drawing.Point(218, 257);
             this.clientDHCPPortTextbox.Name = "clientDHCPPortTextbox";
             this.clientDHCPPortTextbox.Size = new System.Drawing.Size(38, 18);
-            this.clientDHCPPortTextbox.TabIndex = 31;
+            this.clientDHCPPortTextbox.TabIndex = 10;
             this.clientDHCPPortTextbox.Text = "68";
             // 
             // mainForm
