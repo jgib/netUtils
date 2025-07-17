@@ -73,7 +73,61 @@ namespace netUtils
                 logTxt += "HTYPE:  ";
                 if (packet.htype == 1)
                 {
-                    logTxt += "10mb ethernet\r\n";
+                    logTxt += "Ethernet (10Mb)\r\n";
+                }
+                else if (packet.htype == 2)
+                {
+                    logTxt += "Experimental Ethernet (3Mb)\r\n";
+                }
+                else if (packet.htype == 3)
+                {
+                    logTxt += "Amateur Radio AX.25\r\n";
+                }
+                else if (packet.htype == 4)
+                {
+                    logTxt += "Proteon ProNET Token Ring\r\n";
+                }
+                else if (packet.htype == 5)
+                {
+                    logTxt += "Chaos\r\n";
+                }
+                else if (packet.htype == 6)
+                {
+                    logTxt += "IEEE 802 Networks\r\n";
+                }
+                else if (packet.htype == 7)
+                {
+                    logTxt += "ARCNET\r\n";
+                }
+                else if (packet.htype == 8)
+                {
+                    logTxt += "Hyperchannel\r\n";
+                }
+                else if (packet.htype == 9)
+                {
+                    logTxt += "Lanstar\r\n";
+                }
+                else if (packet.htype == 10)
+                {
+                    logTxt += "Autonet Short Address\r\n";
+                } else if (packet.htype == 11)
+                {
+                    logTxt += "LocalTalk\r\n";
+                } else if (packet.htype == 12)
+                {
+                    logTxt += "LocalNet (IBM PCNet or SYTEK LocalNET)\r\n";
+                } else if (packet.htype == 13)
+                {
+                    logTxt += "Ultra link\r\n";
+                } else if (packet.htype == 14)
+                {
+                    logTxt += "SMDS\r\n";
+                } else if (packet.htype == 15)
+                {
+                    logTxt += "Frame Replay\r\n";
+                } else if (packet.htype == 16)
+                {
+                    logTxt += "Asynchronous Transmission Mode (ATM)\r\n";
                 } else
                 {
                     logTxt += $"[{packet.htype}]  See ARP section in \"Assigned Numbers\" RFC\r\n";
