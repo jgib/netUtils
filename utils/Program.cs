@@ -169,7 +169,7 @@ namespace netUtils
                     }
                     if (curr == 2 && i+5 < packet.options.Length)
                     {
-                        logTxt += $"OFFSET:{((uint)packet.options[i + 2] << 24) + ((uint)packet.options[i + 2] << 16) + ((uint)packet.options[i + 2] << 8) + ((uint)packet.options[i + 2])} seconds\r\n";
+                        logTxt += $"OFFSET: {((int)packet.options[i + 2] << 24) + ((int)packet.options[i + 2] << 16) + ((int)packet.options[i + 2] << 8) + ((int)packet.options[i + 2])} seconds [{new DateTime(DateTime.Now.Year,DateTime.Now.Month,DateTime.Now.Day,0,0,0,DateTimeKind.Utc).AddSeconds(((int)packet.options[i + 2] << 24) + ((int)packet.options[i + 2] << 16) + ((int)packet.options[i + 2] << 8) + ((int)packet.options[i + 2]))}]\r\n";
                         i += 5;
                         continue;
                     }
