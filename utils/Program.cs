@@ -110,25 +110,52 @@ namespace netUtils
                 else if (packet.htype == 10)
                 {
                     logTxt += "Autonet Short Address\r\n";
-                } else if (packet.htype == 11)
+                }
+                else if (packet.htype == 11)
                 {
                     logTxt += "LocalTalk\r\n";
-                } else if (packet.htype == 12)
+                }
+                else if (packet.htype == 12)
                 {
                     logTxt += "LocalNet (IBM PCNet or SYTEK LocalNET)\r\n";
-                } else if (packet.htype == 13)
+                }
+                else if (packet.htype == 13)
                 {
                     logTxt += "Ultra link\r\n";
-                } else if (packet.htype == 14)
+                }
+                else if (packet.htype == 14)
                 {
                     logTxt += "SMDS\r\n";
-                } else if (packet.htype == 15)
+                }
+                else if (packet.htype == 15)
                 {
                     logTxt += "Frame Replay\r\n";
-                } else if (packet.htype == 16)
+                }
+                else if (packet.htype == 16)
                 {
                     logTxt += "Asynchronous Transmission Mode (ATM)\r\n";
-                } else
+                }
+                else if (packet.htype == 17)
+                {
+                    logTxt += "HDLC\r\n";
+                }
+                else if (packet.htype == 18)
+                {
+                    logTxt += "Fibre Channel\r\n";
+                }
+                else if (packet.htype == 19)
+                {
+                    logTxt += "Asynchronous Transmission Mode (ATM)\r\n";
+                }
+                else if (packet.htype == 20)
+                {
+                    logTxt += "Serial Line\r\n";
+                }
+                else if (packet.htype == 21)
+                {
+                    logTxt += "Asynchronous Transmission Mode (ATM)\r\n";
+                }
+                else
                 {
                     logTxt += $"[{packet.htype}]  See ARP section in \"Assigned Numbers\" RFC\r\n";
                 }
