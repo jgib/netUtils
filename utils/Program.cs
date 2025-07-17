@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Runtime.CompilerServices;
@@ -51,11 +52,233 @@ namespace netUtils
         {
             _socket.BeginReceiveFrom(state.buffer, 0, bufSize, SocketFlags.None, ref epFrom, recv = (ar) =>
             {
+                string logTxt = "";
                 State so = (State)ar.AsyncState;
                 int bytes = _socket.EndReceiveFrom(ar, ref epFrom);
                 _socket.BeginReceiveFrom(so.buffer, 0, bufSize, SocketFlags.None, ref epFrom, recv, so);
                 verbose.Append($"RECV: {epFrom.ToString()}: {bytes}\r\n{misc.PrintPacket(so.buffer, bytes)}");
+                dhcpPacket packet = dhcpParse(so.buffer, bytes);
+
+                logTxt += "OP:     ";
+                if (packet.op == 1)
+                {
+                    logTxt += "BOOTREQUEST";
+                }
+                if (packet.op == 2)
+                {
+                    logTxt += "BOOTREPLY";
+                }
+                logTxt += "\r\n";
+
+                logTxt += "HTYPE:  ";
+                if (packet.htype == 1)
+                {
+                    logTxt += "10mb ethernet\r\n";
+                } else
+                {
+                    logTxt += $"[{packet.htype}]  See ARP section in \"Assigned Numbers\" RFC\r\n";
+                }
+
+                logTxt += "HLEN:   ";
+                logTxt += $"{packet.hlen}\r\n";
+
+                logTxt += "HOPS:   ";
+                logTxt += $"{packet.hops}\r\n";
+
+                logTxt += "XID:    ";
+                logTxt += $"{packet.xid}\r\n";
+
+                logTxt += "SECS:   ";
+                logTxt += $"{packet.secs} seconds\r\n";
+
+                logTxt += "FLAGS:  ";
+                if ((packet.flags >> 15) == 1)
+                {
+                    logTxt += "BROADCAST";
+                }
+                if ((packet.flags >> 15) == 0)
+                {
+                    logTxt += "NOT BROADCAST";
+                }
+                logTxt += "\r\n";
+
+                logTxt += "CIADDR: ";
+                logTxt += $"{(byte)(packet.ciaddr >> 24)}.{(byte)(packet.ciaddr >> 16)}.{(byte)(packet.ciaddr >> 8)}.{(byte)(packet.ciaddr)}\r\n";
+
+                logTxt += "YIADDR: ";
+                logTxt += $"{(byte)(packet.yiaddr >> 24)}.{(byte)(packet.yiaddr >> 16)}.{(byte)(packet.yiaddr >> 8)}.{(byte)(packet.yiaddr)}\r\n";
+
+                logTxt += "SIADDR: ";
+                logTxt += $"{(byte)(packet.siaddr >> 24)}.{(byte)(packet.siaddr >> 16)}.{(byte)(packet.siaddr >> 8)}.{(byte)(packet.siaddr)}\r\n";
+
+                logTxt += "GIADDR: ";
+                logTxt += $"{(byte)(packet.giaddr >> 24)}.{(byte)(packet.giaddr >> 16)}.{(byte)(packet.giaddr >> 8)}.{(byte)(packet.giaddr)}\r\n";
+
+                logTxt += "CHADDR: ";
+                for (int i = 0; i < 16; i++)
+                {
+                    if (i%2 == 0 && i != 0)
+                    {
+                        logTxt += " ";
+                    }
+                    logTxt += $"{packet.chaddr[i].ToString("X2")}";
+                }
+                logTxt += "\r\n";
+                
+                logTxt += "SNAME:  ";
+                for (int i = 0; i < 64; i++)
+                {
+                    if (packet.sname[i] == 0)
+                    {
+                        break;
+                    } else
+                    {
+                        logTxt += $"{packet.sname[i].ToString()}";
+                    }
+                }
+                logTxt += "\r\n";
+
+                logTxt += "FILE:   ";
+                for (int i = 0; i < 128; i++)
+                {
+                    if (packet.file[i] == 0)
+                    {
+                        break;
+                    } else
+                    {
+                        logTxt += $"{packet.file[i].ToString()}";
+                    }
+                }
+                logTxt += "\r\n";
+
+                logTxt += "OPTIONS:\r\n";
+                for (int i = 0; i < packet.options.Length; i++)
+                {
+                    byte curr = packet.options[i];
+
+                    if (curr == 255)
+                    {
+                        logTxt += "END\r\n";
+                        continue;
+                    }
+                    if (curr == 1 && i+5 < packet.options.Length)
+                    {
+                        logTxt += $"SNMASK: {packet.options[i + 2]}.{packet.options[i + 3]}.{packet.options[i + 4]}.{packet.options[i + 5]}\r\n";
+                        i += 5;
+                        continue;
+                    }
+                    if (curr == 2 && i+5 < packet.options.Length)
+                    {
+                        logTxt += $"OFFSET:{((uint)packet.options[i + 2] << 24) + ((uint)packet.options[i + 2] << 16) + ((uint)packet.options[i + 2] << 8) + ((uint)packet.options[i + 2])} seconds\r\n";
+                        i += 5;
+                        continue;
+                    }
+                }
+
+                verbose.Append($"\r\n{logTxt}");
+
             }, state);
+        }
+        public dhcpPacket dhcpParse(byte[] data, int length)
+        {
+            dhcpPacket output = new dhcpPacket();
+
+            if (data.Length < 236)
+            {
+                return output;
+            }
+
+            output.chaddr = new byte[16];
+            output.sname = new byte[64];
+            output.file = new byte[128];
+            output.options = new byte[length - 236];
+
+            output.op = data[0];
+            output.htype = data[1];
+            output.hlen = data[2];
+            output.hops = data[3];
+
+            for (int i = 0; i < 4; i++)
+            {
+                output.xid <<= 8;
+                output.xid += data[4 + i];
+            }
+
+            for (int i = 0; i < 2; i++)
+            {
+                output.secs <<= 8;
+                output.secs += data[8 + i];
+            }
+
+            for (int i = 0; i < 2; i++)
+            {
+                output.flags <<= 8;
+                output.flags += data[10 + i];
+            }
+
+            for (int i = 0; i < 4; i++)
+            {
+                output.ciaddr <<= 8;
+                output.ciaddr += data[12 + i];
+            }
+
+            for (int i = 0; i < 4; i++)
+            {
+                output.yiaddr <<= 8;
+                output.yiaddr += data[16 + i];
+            }
+
+            for (int i = 0; i < 4; i++)
+            {
+                output.siaddr <<= 8;
+                output.siaddr += data[20 + i];
+            }
+
+            for (int i = 0; i < 4; i++)
+            {
+                output.giaddr <<= 8;
+                output.giaddr += data[24 + i];
+            }
+
+            for (int i = 0; i < 16; i++)
+            {
+                output.chaddr[i] = data[28 + i];
+            }
+
+            for (int i = 0; i < 64; i++)
+            {
+                output.sname[i] = data[44 + i];
+            }
+
+            for (int i = 0; i < 128; i++)
+            {
+                output.file[i] = data[108 + i];
+            }
+
+            for (int i = 236; i < length; i++)
+            {
+                output.options[i - 236] = data[i];
+            }
+
+            return output;
+        }
+        public struct dhcpPacket
+        {
+            public byte op;
+            public byte htype;
+            public byte hlen;
+            public byte hops;
+            public uint xid;
+            public ushort secs;
+            public ushort flags;
+            public uint ciaddr;
+            public uint yiaddr;
+            public uint siaddr;
+            public uint giaddr;
+            public byte[] chaddr;  //  16 bytes
+            public byte[] sname;   //  64 bytes
+            public byte[] file;    // 128 bytes
+            public byte[] options; // variable bytes
         }
         public struct dhcpServer
         {
