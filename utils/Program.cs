@@ -2,15 +2,61 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Net;
+using System.Net.Sockets;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace netUtils
 {
-    public static class dhcp
+    public class dhcp
     {
+        private Socket _socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+        private const int bufSize = 65535;
+        private State state = new State();
+        private EndPoint epFrom = new IPEndPoint(IPAddress.Any, 0);
+        private AsyncCallback recv = null;
+
+        public class State
+        {
+            public byte[] buffer = new byte[bufSize];
+        }
+
+        public void Server(string address, int port)
+        {
+            _socket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.ReuseAddress, true);
+            _socket.Bind(new IPEndPoint(IPAddress.Parse(address), port));
+            Receive();
+        }
+
+        public void Client(string address, int port)
+        {
+            _socket.Connect(IPAddress.Parse(address), port);
+            Receive();
+        }
+        public void Send(string text)
+        {
+            byte[] data = Encoding.ASCII.GetBytes(text);
+            _socket.BeginSend(data, 0, data.Length, SocketFlags.None, (ar) =>
+            {
+                State so = (State)ar.AsyncState;
+                int bytes = _socket.EndSend(ar);
+                verbose.Append($"SEND: {bytes}, {text}\r\n{misc.PrintPacket(data, bytes)}");
+            }, state);
+        }
+        private void Receive()
+        {
+            _socket.BeginReceiveFrom(state.buffer, 0, bufSize, SocketFlags.None, ref epFrom, recv = (ar) =>
+            {
+                State so = (State)ar.AsyncState;
+                int bytes = _socket.EndReceiveFrom(ar, ref epFrom);
+                _socket.BeginReceiveFrom(so.buffer, 0, bufSize, SocketFlags.None, ref epFrom, recv, so);
+                verbose.Append($"RECV: {epFrom.ToString()}: {bytes}\r\n{misc.PrintPacket(so.buffer, bytes)}");
+            }, state);
+        }
         public struct dhcpServer
         {
             public string poolStart;
@@ -29,6 +75,35 @@ namespace netUtils
     }
     public static class misc
     {
+        public static string PrintPacket(byte[] input, int bufSize)
+        {
+            string output = "";
+
+            if (bufSize > input.Length)
+            {
+                throw new ArgumentException($"Buffer size [{bufSize}] is larger than length of input data [{input.Length}]");
+            }
+
+            for (int i = 0; i < bufSize; i++)
+            {
+                if (i % 2 == 0 && i != 0)
+                {
+                    output += "  ";
+                }
+                if (i % 8 == 0 && i != 0)
+                {
+                    output += "      ";
+                }
+                if (i % 32 == 0 && i != 0)
+                {
+                    output += "\r\n";
+                }
+
+                output += $"{input[i].ToString("X2")}";
+            }
+
+            return output;
+        }
         public static bool IsIP (string ipAddr)
         {
             try
@@ -186,17 +261,27 @@ namespace netUtils
         {
             if (_initialized)
             {
+                /*
                 if (input.Length > textBox.MaxLength)
                 {
                     throw new ArgumentException($"input length [{input.Length}] exceeds maximum length for textbox control [{textBox.MaxLength}]");
                 }
-                textBox.Text = $"{DateTime.Now.ToString("HH:mm:ss.fff")} | {filePath}:{lineNumber} | {callername} | {input}\r\n";
+                */
+
+                if (textBox.InvokeRequired)
+                {
+                    textBox.Invoke(new MethodInvoker(delegate { textBox.Text = $"{DateTime.Now.ToString("HH:mm:ss.fff")} | {filePath}:{lineNumber} | {callername} | {input}\r\n"; }));
+                } else
+                {
+                    textBox.Text = $"{DateTime.Now.ToString("HH:mm:ss.fff")} | {filePath}:{lineNumber} | {callername} | {input}\r\n";
+                }
             }
         }
         public static void Append(string input, [CallerLineNumber] int lineNumber = 0, [CallerMemberName] string callername = "", [CallerFilePath] string filePath = "")
         {
             if (_initialized)
             {
+                /*
                 if (input.Length > textBox.MaxLength)
                 {
                     throw new ArgumentException($"input length [{input.Length}] exceeds maximum length for textbox control [{textBox.MaxLength}]");
@@ -205,7 +290,15 @@ namespace netUtils
                 {
                     throw new ArgumentException($"input length [{input.Length}] in addition to current textbox control length [{textBox.Text.Length}] exceeds maximum length for textbox control [{textBox.MaxLength}]");
                 }
-                textBox.AppendText($"{DateTime.Now.ToString("HH:mm:ss.fff")} | {filePath}:{lineNumber} | {callername} | {input}\r\n");
+                */
+
+                if (textBox.InvokeRequired)
+                {
+                    textBox.Invoke(new MethodInvoker(delegate { textBox.AppendText($"{DateTime.Now.ToString("HH:mm:ss.fff")} | {filePath}:{lineNumber} | {callername} | {input}\r\n"); }));
+                } else
+                {
+                    textBox.AppendText($"{DateTime.Now.ToString("HH:mm:ss.fff")} | {filePath}:{lineNumber} | {callername} | {input}\r\n");
+                }
             }
         }
         public static void Clear()

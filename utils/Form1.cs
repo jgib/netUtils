@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -305,15 +306,11 @@ namespace netUtils
                     debug.Append(outTxt);
                 }
 
-
-
-
-
-
-
-
-
-                //do dns and routers
+                ///////////////
+                /// TESTING ///
+                ///////////////
+                dhcp s = new dhcp();
+                s.Server("0.0.0.0", 67);
             }
             else
             {
