@@ -239,24 +239,37 @@ namespace netUtils
 
                     if (curr == 0)
                     {
-                        logTxt += "PAD\r\n";
+                        logTxt += "  PAD\r\n";
                         continue;
                     }
                     if (curr == 255)
                     {
-                        logTxt += "END\r\n";
+                        logTxt += "  END\r\n";
                         continue;
                     }
                     if (curr == 1 && i+5 < packet.options.Length)
                     {
-                        logTxt += $"SNMASK: {packet.options[i + 2]}.{packet.options[i + 3]}.{packet.options[i + 4]}.{packet.options[i + 5]}\r\n";
+                        logTxt += $"  SNMASK: {packet.options[i + 2]}.{packet.options[i + 3]}.{packet.options[i + 4]}.{packet.options[i + 5]}\r\n";
                         i += 5;
                         continue;
                     }
                     if (curr == 2 && i+5 < packet.options.Length)
                     {
-                        logTxt += $"OFFSET: {((int)packet.options[i + 2] << 24) + ((int)packet.options[i + 2] << 16) + ((int)packet.options[i + 2] << 8) + ((int)packet.options[i + 2])} seconds [{new DateTime(DateTime.Now.Year,DateTime.Now.Month,DateTime.Now.Day,0,0,0,DateTimeKind.Utc).AddSeconds(((int)packet.options[i + 2] << 24) + ((int)packet.options[i + 2] << 16) + ((int)packet.options[i + 2] << 8) + ((int)packet.options[i + 2]))}]\r\n";
+                        logTxt += $"  OFFSET: {((int)packet.options[i + 2] << 24) + ((int)packet.options[i + 2] << 16) + ((int)packet.options[i + 2] << 8) + ((int)packet.options[i + 2])} seconds [{new DateTime(DateTime.Now.Year,DateTime.Now.Month,DateTime.Now.Day,0,0,0,DateTimeKind.Utc).AddSeconds(((int)packet.options[i + 2] << 24) + ((int)packet.options[i + 2] << 16) + ((int)packet.options[i + 2] << 8) + ((int)packet.options[i + 2]))}]\r\n";
                         i += 5;
+                        continue;
+                    }
+                    if (curr == 3 && i+1 < packet.options.Length && i + 1 + packet.options[i+1] < packet.options.Length)
+                    {
+                        for (int j = i + 2; j < packet.options[i+1]; j++)
+                        {
+                            if (j+3 < packet.options[i+1])
+                            {
+                                logTxt += $"  ROUTER: {(byte)(packet.options[j])}.{(byte)(packet.options[j+1])}.{(byte)(packet.options[j+2])}.{(byte)(packet.options[j+3])}\r\n";
+                                j += 4;
+                            }
+                        }
+                        i += (packet.options[i + 1] + 1);
                         continue;
                     }
                 }
