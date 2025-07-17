@@ -156,6 +156,11 @@ namespace netUtils
                 {
                     byte curr = packet.options[i];
 
+                    if (curr == 0)
+                    {
+                        logTxt += "PAD\r\n";
+                        continue;
+                    }
                     if (curr == 255)
                     {
                         logTxt += "END\r\n";
