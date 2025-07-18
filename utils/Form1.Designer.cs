@@ -125,7 +125,7 @@
             this.tabControl1.Location = new System.Drawing.Point(-1, 4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(804, 314);
+            this.tabControl1.Size = new System.Drawing.Size(804, 607);
             this.tabControl1.TabIndex = 3;
             // 
             // tabDHCP
@@ -166,7 +166,7 @@
             this.tabDHCP.Location = new System.Drawing.Point(4, 24);
             this.tabDHCP.Name = "tabDHCP";
             this.tabDHCP.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDHCP.Size = new System.Drawing.Size(796, 286);
+            this.tabDHCP.Size = new System.Drawing.Size(796, 579);
             this.tabDHCP.TabIndex = 0;
             this.tabDHCP.Text = "DHCP";
             this.tabDHCP.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tabDHCP_MouseDown);
@@ -177,19 +177,19 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.outputDHCPtextbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.outputDHCPtextbox.Location = new System.Drawing.Point(298, 104);
+            this.outputDHCPtextbox.Location = new System.Drawing.Point(298, 6);
             this.outputDHCPtextbox.Multiline = true;
             this.outputDHCPtextbox.Name = "outputDHCPtextbox";
             this.outputDHCPtextbox.ReadOnly = true;
             this.outputDHCPtextbox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.outputDHCPtextbox.Size = new System.Drawing.Size(490, 176);
+            this.outputDHCPtextbox.Size = new System.Drawing.Size(490, 567);
             this.outputDHCPtextbox.TabIndex = 27;
             this.outputDHCPtextbox.Enter += new System.EventHandler(this.outputDHCPtextbox_Enter);
             // 
             // routersDHCPremoveButton
             // 
             this.routersDHCPremoveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.routersDHCPremoveButton.Location = new System.Drawing.Point(576, 75);
+            this.routersDHCPremoveButton.Location = new System.Drawing.Point(44, 489);
             this.routersDHCPremoveButton.Name = "routersDHCPremoveButton";
             this.routersDHCPremoveButton.Size = new System.Drawing.Size(75, 23);
             this.routersDHCPremoveButton.TabIndex = 16;
@@ -200,7 +200,7 @@
             // routersDHCPaddButton
             // 
             this.routersDHCPaddButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.routersDHCPaddButton.Location = new System.Drawing.Point(576, 46);
+            this.routersDHCPaddButton.Location = new System.Drawing.Point(44, 460);
             this.routersDHCPaddButton.Name = "routersDHCPaddButton";
             this.routersDHCPaddButton.Size = new System.Drawing.Size(75, 23);
             this.routersDHCPaddButton.TabIndex = 15;
@@ -213,7 +213,7 @@
             this.routersDHCPlistbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.routersDHCPlistbox.FormattingEnabled = true;
             this.routersDHCPlistbox.ItemHeight = 11;
-            this.routersDHCPlistbox.Location = new System.Drawing.Point(657, 30);
+            this.routersDHCPlistbox.Location = new System.Drawing.Point(125, 444);
             this.routersDHCPlistbox.Name = "routersDHCPlistbox";
             this.routersDHCPlistbox.Size = new System.Drawing.Size(131, 68);
             this.routersDHCPlistbox.TabIndex = 24;
@@ -221,7 +221,7 @@
             // routersDHCPtextbox
             // 
             this.routersDHCPtextbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.routersDHCPtextbox.Location = new System.Drawing.Point(657, 6);
+            this.routersDHCPtextbox.Location = new System.Drawing.Point(125, 420);
             this.routersDHCPtextbox.Name = "routersDHCPtextbox";
             this.routersDHCPtextbox.Size = new System.Drawing.Size(131, 18);
             this.routersDHCPtextbox.TabIndex = 14;
@@ -230,7 +230,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(590, 8);
+            this.label10.Location = new System.Drawing.Point(58, 422);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(61, 11);
             this.label10.TabIndex = 22;
@@ -241,7 +241,7 @@
             this.dnsDHCPlistbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.dnsDHCPlistbox.FormattingEnabled = true;
             this.dnsDHCPlistbox.ItemHeight = 11;
-            this.dnsDHCPlistbox.Location = new System.Drawing.Point(391, 30);
+            this.dnsDHCPlistbox.Location = new System.Drawing.Point(125, 331);
             this.dnsDHCPlistbox.Name = "dnsDHCPlistbox";
             this.dnsDHCPlistbox.Size = new System.Drawing.Size(131, 68);
             this.dnsDHCPlistbox.TabIndex = 21;
@@ -249,7 +249,7 @@
             // dnsDHCPremoveButton
             // 
             this.dnsDHCPremoveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.dnsDHCPremoveButton.Location = new System.Drawing.Point(298, 75);
+            this.dnsDHCPremoveButton.Location = new System.Drawing.Point(44, 376);
             this.dnsDHCPremoveButton.Name = "dnsDHCPremoveButton";
             this.dnsDHCPremoveButton.Size = new System.Drawing.Size(75, 23);
             this.dnsDHCPremoveButton.TabIndex = 13;
@@ -260,7 +260,7 @@
             // dnsDHCPaddButton
             // 
             this.dnsDHCPaddButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.dnsDHCPaddButton.Location = new System.Drawing.Point(298, 46);
+            this.dnsDHCPaddButton.Location = new System.Drawing.Point(44, 347);
             this.dnsDHCPaddButton.Name = "dnsDHCPaddButton";
             this.dnsDHCPaddButton.Size = new System.Drawing.Size(75, 23);
             this.dnsDHCPaddButton.TabIndex = 12;
@@ -271,7 +271,7 @@
             // dnsDHCPtextbox
             // 
             this.dnsDHCPtextbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.dnsDHCPtextbox.Location = new System.Drawing.Point(391, 6);
+            this.dnsDHCPtextbox.Location = new System.Drawing.Point(125, 307);
             this.dnsDHCPtextbox.Name = "dnsDHCPtextbox";
             this.dnsDHCPtextbox.Size = new System.Drawing.Size(131, 18);
             this.dnsDHCPtextbox.TabIndex = 11;
@@ -280,7 +280,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(296, 8);
+            this.label9.Location = new System.Drawing.Point(30, 309);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(89, 11);
             this.label9.TabIndex = 17;
@@ -400,9 +400,9 @@
             // startDHCPbutton
             // 
             this.startDHCPbutton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.startDHCPbutton.Location = new System.Drawing.Point(11, 233);
+            this.startDHCPbutton.Location = new System.Drawing.Point(44, 518);
             this.startDHCPbutton.Name = "startDHCPbutton";
-            this.startDHCPbutton.Size = new System.Drawing.Size(99, 47);
+            this.startDHCPbutton.Size = new System.Drawing.Size(212, 47);
             this.startDHCPbutton.TabIndex = 5;
             this.startDHCPbutton.Text = "Start";
             this.startDHCPbutton.UseVisualStyleBackColor = true;
@@ -449,7 +449,7 @@
             this.tabDNS.Location = new System.Drawing.Point(4, 24);
             this.tabDNS.Name = "tabDNS";
             this.tabDNS.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDNS.Size = new System.Drawing.Size(796, 286);
+            this.tabDNS.Size = new System.Drawing.Size(796, 566);
             this.tabDNS.TabIndex = 1;
             this.tabDNS.Text = "DNS";
             this.tabDNS.UseVisualStyleBackColor = true;
@@ -465,7 +465,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(123, 235);
+            this.label1.Location = new System.Drawing.Point(30, 248);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(89, 11);
             this.label1.TabIndex = 28;
@@ -476,7 +476,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(123, 259);
+            this.label2.Location = new System.Drawing.Point(30, 272);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(89, 11);
             this.label2.TabIndex = 29;
@@ -486,7 +486,7 @@
             // serverDHCPPortTextbox
             // 
             this.serverDHCPPortTextbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.serverDHCPPortTextbox.Location = new System.Drawing.Point(218, 233);
+            this.serverDHCPPortTextbox.Location = new System.Drawing.Point(125, 246);
             this.serverDHCPPortTextbox.Name = "serverDHCPPortTextbox";
             this.serverDHCPPortTextbox.Size = new System.Drawing.Size(38, 18);
             this.serverDHCPPortTextbox.TabIndex = 9;
@@ -495,7 +495,7 @@
             // clientDHCPPortTextbox
             // 
             this.clientDHCPPortTextbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.clientDHCPPortTextbox.Location = new System.Drawing.Point(218, 257);
+            this.clientDHCPPortTextbox.Location = new System.Drawing.Point(125, 270);
             this.clientDHCPPortTextbox.Name = "clientDHCPPortTextbox";
             this.clientDHCPPortTextbox.Size = new System.Drawing.Size(38, 18);
             this.clientDHCPPortTextbox.TabIndex = 10;
@@ -505,7 +505,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 11F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(804, 319);
+            this.ClientSize = new System.Drawing.Size(804, 612);
             this.Controls.Add(this.closeButton);
             this.Controls.Add(this.maximizeButton);
             this.Controls.Add(this.minimizeButton);

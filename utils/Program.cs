@@ -243,6 +243,7 @@ namespace netUtils
 
                     if (curr == 0)
                     {
+                        if ((i+1 < packet.options.Length && (packet.options[i+1] != 0)) || !(i+1 < packet.options.Length))
                         logTxt += "  PAD\r\n";
                         continue;
                     }
