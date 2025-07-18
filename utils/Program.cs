@@ -198,11 +198,15 @@ namespace netUtils
                 logTxt += "CHADDR: ";
                 for (int i = 0; i < 16; i++)
                 {
-                    if (i%2 == 0 && i != 0)
+                    if (i%6 == 0 && i != 0)
                     {
                         logTxt += " ";
                     }
                     logTxt += $"{packet.chaddr[i].ToString("X2")}";
+                    if (i != 15)
+                    {
+                        logTxt += ":";
+                    }
                 }
                 logTxt += "\r\n";
                 
@@ -275,7 +279,10 @@ namespace netUtils
                 }
 
                 verbose.Append($"\r\n{logTxt}");
-
+                if (mainForm.Instance != null)
+                {
+                    mainForm.Instance.logDHCP(logTxt);
+                }
             }, state);
         }
         public dhcpPacket dhcpParse(byte[] data, int length)

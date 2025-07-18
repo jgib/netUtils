@@ -10,6 +10,20 @@ namespace netUtils
 {
     public partial class mainForm : Form
     {
+        static mainForm instance;
+        public static mainForm Instance { get { return instance; } }
+
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+            instance = this;
+        }
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            instance = null;
+        }
+
         public DateTime lastClick;
         public double doubleClickThreshold = 150;
 
